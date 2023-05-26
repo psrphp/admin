@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Psrphp\Admin\Http\Account;
 
 use App\Psrphp\Admin\Http\Common;
+use App\Psrphp\Admin\Lib\Response;
 use App\Psrphp\Admin\Model\Account;
 use PsrPHP\Database\Db;
 use PsrPHP\Form\Builder;
@@ -50,6 +51,6 @@ class Create extends Common
             'password' => Account::makePassword(trim($request->post('password', '123456'))),
             'state' => $request->post('state', 1, ['intval']),
         ]);
-        return $this->success('操作成功！', 'javascript:history.go(-2)');
+        return Response::success('操作成功！', 'javascript:history.go(-2)');
     }
 }

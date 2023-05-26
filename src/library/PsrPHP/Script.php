@@ -77,7 +77,7 @@ CREATE TABLE `prefix_psrphp_admin_role_node` (
     PRIMARY KEY (`id`) USING BTREE
     ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='角色权限表';
 INSERT INTO `prefix_psrphp_admin_account` (`id`, `name`, `password`, `state`) VALUES
-(1, 'admin', '78484391a066bf212fc9694789c7a5a2', 1);
+(1, 'admin', '74e072086a6fa61008709943da24b82e', 1);
 str;
     }
 

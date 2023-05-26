@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Psrphp\Admin\Http\Role;
 
 use App\Psrphp\Admin\Http\Common;
+use App\Psrphp\Admin\Lib\Response;
 use PsrPHP\Database\Db;
 use PsrPHP\Form\Builder;
 use PsrPHP\Form\Component\Col;
@@ -39,7 +40,7 @@ class Node extends Common
                     (new Html((function () use ($db, $template, $role): string {
                         $nodes = [];
                         foreach (Framework::getAppList() as $app) {
-                            if ($tmp = $this->getNodesByApp($app['name'])) {
+                            if ($tmp = $this->getNodesByApp($app)) {
                                 $nodes[$app['name']] = $tmp;
                             }
                         }
@@ -78,7 +79,7 @@ str;
                 )
             )
         );
-        return $this->html($form->__toString());
+        return $form;
     }
 
     public function post(
@@ -103,26 +104,22 @@ str;
             $db->insert('psrphp_admin_role_node', $nodes);
         }
 
-        return $this->success('操作成功！', 'javascript:history.go(-2)');
+        return Response::success('操作成功！', 'javascript:history.go(-2)');
     }
 
-    private function getNodesByApp(string $appname): array
+    private function getNodesByApp(array $app): array
     {
         $nodes = [];
-
-        $cls = str_replace(['-', '/'], ['', '\\'], ucwords('App\\' . $appname . '\\App', '/\\-'));
-        $base = dirname((new ReflectionClass($cls))->getFileName()) . '/Http';
-
+        $base = $app['dir'] . '/src/library/Http';
         if (!is_dir($base)) {
             return $nodes;
         }
-
         $files = $this->getFileList($base);
         foreach ($files as $file) {
             if (substr($file, -4) != '.php') {
                 continue;
             }
-            $cls = str_replace(['-', '/'], ['', '\\'], ucwords('App\\' . $appname . '\\Http' . substr($file, strlen($base), -4), '/\\-'));
+            $cls = str_replace(['-', '/'], ['', '\\'], ucwords('App\\' . $app['name'] . '\\Http' . substr($file, strlen($base), -4), '/\\-'));
             $rfc = (new ReflectionClass($cls));
             if (!$rfc->isInstantiable()) {
                 continue;

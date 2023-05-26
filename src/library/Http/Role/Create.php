@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Psrphp\Admin\Http\Role;
 
 use App\Psrphp\Admin\Http\Common;
+use App\Psrphp\Admin\Lib\Response;
 use PsrPHP\Database\Db;
 use PsrPHP\Form\Builder;
 use PsrPHP\Form\Component\Col;
@@ -38,6 +39,6 @@ class Create extends Common
         $db->insert('psrphp_admin_role', [
             'name' => $request->post('name'),
         ]);
-        return $this->success('操作成功！', null, 'javascript:history.go(-2)');
+        return Response::success('操作成功！', null, 'javascript:history.go(-2)');
     }
 }

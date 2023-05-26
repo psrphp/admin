@@ -8,7 +8,7 @@ use Psr\Http\Message\ResponseInterface;
 use PsrPHP\Psr17\Factory;
 use PsrPHP\Template\Template;
 
-trait Response
+class Response
 {
     public static function success(string $message, $data = null, $redirect_url = null): ResponseInterface
     {

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Psrphp\Admin\Http\Account;
 
 use App\Psrphp\Admin\Http\Common;
+use App\Psrphp\Admin\Lib\Response;
 use App\Psrphp\Admin\Model\Account;
 use PsrPHP\Database\Db;
 use PsrPHP\Request\Request;
@@ -27,7 +28,7 @@ class Password extends Common
             'id' => $request->get('id', 0, ['intval']),
         ]);
         if ($account['id'] == 1) {
-            return $this->error('不支持对超级管理员进行该操作~');
+            return Response::error('不支持对超级管理员进行该操作~');
         }
         $form = new Builder('给账户重置密码');
         $form->addItem(
@@ -50,7 +51,7 @@ class Password extends Common
             'id' => $request->post('id', 0, ['intval']),
         ]);
         if ($account['id'] == 1) {
-            return $this->error('不支持对超级管理员进行该操作~');
+            return Response::error('不支持对超级管理员进行该操作~');
         }
 
         $db->update('psrphp_admin_account', [
@@ -59,6 +60,6 @@ class Password extends Common
             'id' => $account['id'],
         ]);
 
-        return $this->success('操作成功！', 'javascript:history.go(-2)');
+        return Response::success('操作成功！', 'javascript:history.go(-2)');
     }
 }

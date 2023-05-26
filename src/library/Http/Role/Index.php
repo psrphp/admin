@@ -23,6 +23,6 @@ class Index extends Common
                 'id' => 'ASC',
             ],
         ]);
-        return $this->html($template->renderFromFile('role/index@psrphp/admin', $data));
+        return $template->renderFromFile('role/index@psrphp/admin', $data);
     }
 }

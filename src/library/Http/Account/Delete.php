@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Psrphp\Admin\Http\Account;
 
 use App\Psrphp\Admin\Http\Common;
+use App\Psrphp\Admin\Lib\Response;
 use PsrPHP\Database\Db;
 use PsrPHP\Request\Request;
 
@@ -18,7 +19,7 @@ class Delete extends Common
         Db $db
     ) {
         if ($request->get('id') == '1') {
-            return $this->error('超级管理员不允许删除！');
+            return Response::error('超级管理员不允许删除！');
         }
         $db->delete('psrphp_admin_account', [
             'id' => $request->get('id'),
@@ -26,6 +27,6 @@ class Delete extends Common
         $db->delete('psrphp_admin_account_role', [
             'account_id' => $request->get('id'),
         ]);
-        return $this->success('操作成功！');
+        return Response::success('操作成功！');
     }
 }

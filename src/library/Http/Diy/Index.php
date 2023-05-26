@@ -6,6 +6,7 @@ namespace App\Psrphp\Admin\Http\Diy;
 
 use App\Psrphp\Admin\Http\Common;
 use App\Psrphp\Admin\Lib\Json;
+use App\Psrphp\Admin\Lib\Response;
 use Composer\InstalledVersions;
 use PsrPHP\Framework\Config;
 use PsrPHP\Framework\Framework;
@@ -38,8 +39,7 @@ class Index extends Common
 
         foreach (Framework::getAppList() as $app) {
             $widgets[$app['name']] = [];
-            $class_name = str_replace(['-', '/'], ['', '\\'], ucwords('App\\' . $app['name'] . '\\App', '/\\-'));
-            $dir = dirname(dirname((new ReflectionClass($class_name))->getFileName())) . '/widget/';
+            $dir = $app['dir'] . '/src/widget/';
             $cfg = $json->read($dir . 'config.json', []);
             foreach (glob($dir . '*.php') as $file) {
                 $name = substr($file, strlen($dir), -4);
@@ -68,7 +68,7 @@ class Index extends Common
                     'size' => $request->post('size'),
                 ];
                 $config->save('diy@psrphp/admin', $diy);
-                return $this->success('操作成功！');
+                return Response::success('操作成功！');
                 break;
 
             case 'left':
@@ -78,7 +78,7 @@ class Index extends Common
                 $diy[$index - 1] = $diy[$index];
                 $diy[$index] = $tmp;
                 $config->save('diy@psrphp/admin', $diy);
-                return $this->success('操作成功！');
+                return Response::success('操作成功！');
                 break;
 
             case 'right':
@@ -88,7 +88,7 @@ class Index extends Common
                 $diy[$index + 1] = $diy[$index];
                 $diy[$index] = $tmp;
                 $config->save('diy@psrphp/admin', $diy);
-                return $this->success('操作成功！');
+                return Response::success('操作成功！');
                 break;
 
             case 'remove':
@@ -96,11 +96,11 @@ class Index extends Common
                 $index = $request->post('index');
                 unset($diy[$index]);
                 $config->save('diy@psrphp/admin', array_values($diy));
-                return $this->success('操作成功！');
+                return Response::success('操作成功！');
                 break;
 
             default:
-                return $this->error('参数错误');
+                return Response::error('参数错误');
                 break;
         }
     }

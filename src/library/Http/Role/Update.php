@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Psrphp\Admin\Http\Role;
 
 use App\Psrphp\Admin\Http\Common;
+use App\Psrphp\Admin\Lib\Response;
 use PsrPHP\Database\Db;
 use PsrPHP\Form\Builder;
 use PsrPHP\Form\Component\Col;
@@ -34,7 +35,7 @@ class Update extends Common
                 )
             )
         );
-        return $this->html($form->__toString());
+        return $form;
     }
 
     public function post(
@@ -53,6 +54,6 @@ class Update extends Common
             'id' => $role['id'],
         ]);
 
-        return $this->success('操作成功！', 'javascript:history.go(-2)');
+        return Response::success('操作成功！', 'javascript:history.go(-2)');
     }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Psrphp\Admin\Http\Cache;
 
 use App\Psrphp\Admin\Http\Common;
+use App\Psrphp\Admin\Lib\Response;
 use Psr\Http\Message\ResponseInterface;
 use Psr\SimpleCache\CacheInterface;
 
@@ -17,8 +18,8 @@ class Clear extends Common
         CacheInterface $cache
     ): ResponseInterface {
         if ($cache->clear()) {
-            return $this->success('清理成功！');
+            return Response::success('清理成功！');
         }
-        return $this->error('清理失败！');
+        return Response::error('清理失败！');
     }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Psrphp\Admin\Http\My;
 
 use App\Psrphp\Admin\Http\Common;
+use App\Psrphp\Admin\Lib\Response;
 use App\Psrphp\Admin\Model\Account;
 use PsrPHP\Database\Db;
 use PsrPHP\Form\Builder;
@@ -49,6 +50,6 @@ class Password extends Common
         ], [
             'id' => $account->getAccountId(),
         ]);
-        return $this->success('修改成功！');
+        return Response::success('修改成功！');
     }
 }

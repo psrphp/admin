@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Psrphp\Admin\Http\Account;
 
 use App\Psrphp\Admin\Http\Common;
+use App\Psrphp\Admin\Lib\Response;
 use PsrPHP\Database\Db;
 use PsrPHP\Request\Request;
 use PsrPHP\Form\Builder;
@@ -27,7 +28,7 @@ class Role extends Common
             'id' => $request->get('id', 0, ['intval']),
         ]);
         if ($account['id'] == 1) {
-            return $this->error('不支持对超级管理员进行该操作~');
+            return Response::error('不支持对超级管理员进行该操作~');
         }
         $form = new Builder('给账户设置角色');
         $form->addItem(
@@ -68,7 +69,7 @@ class Role extends Common
             'id' => $request->post('id', 0, ['intval']),
         ]);
         if ($account['id'] == 1) {
-            return $this->error('不支持对超级管理员进行该操作~');
+            return Response::error('不支持对超级管理员进行该操作~');
         }
 
         $db->delete('psrphp_admin_account_role', [
@@ -86,6 +87,6 @@ class Role extends Common
             $db->insert('psrphp_admin_account_role', $account_roles);
         }
 
-        return $this->success('操作成功！', 'javascript:history.go(-2)');
+        return Response::success('操作成功！', 'javascript:history.go(-2)');
     }
 }

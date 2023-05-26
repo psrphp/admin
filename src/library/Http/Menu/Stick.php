@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Psrphp\Admin\Http\Menu;
 
 use App\Psrphp\Admin\Http\Common;
+use App\Psrphp\Admin\Lib\Response;
 use App\Psrphp\Admin\Model\Account;
 use PsrPHP\Framework\Config;
 use PsrPHP\Request\Request;
@@ -29,11 +30,11 @@ class Stick extends Common
         if ($key !== false) {
             unset($menus[$key]);
             $config->save('menus.account_' . $account->getAccountId(), $menus);
-            return $this->success('已取消收藏');
+            return Response::success('已取消收藏');
         } else {
             $menus[] = $menu;
             $config->save('menus.account_' . $account->getAccountId(), $menus);
-            return $this->success('已收藏');
+            return Response::success('已收藏');
         }
     }
 }

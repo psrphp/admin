@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace App\Psrphp\Admin\Model;
 
-use App\Psrphp\Admin\Http\Auth\Login;
 use App\Psrphp\Admin\Http\Auth\Logout;
 use App\Psrphp\Admin\Http\Index;
 use App\Psrphp\Admin\Http\Menu\Index as MenuIndex;
 use App\Psrphp\Admin\Http\Menu\Stick;
-use App\Psrphp\Admin\Http\Tool\Captcha;
 use PsrPHP\Database\Db;
 use PsrPHP\Session\Session;
 use Exception;
@@ -33,7 +31,7 @@ class Account
         return $this->session->has('admin_account_id');
     }
 
-    public function loginById(int $account_id, string $password): bool
+    public function loginById($account_id, string $password): bool
     {
         if ($this->verifyPassword($account_id, $password)) {
             $this->session->set('admin_account_id', $account_id);
@@ -62,12 +60,12 @@ class Account
         return true;
     }
 
-    public function getAccountId(): int
+    public function getAccountId()
     {
         if (!$this->isLogin()) {
             throw new Exception("未登录");
         }
-        return (int)$this->session->get('admin_account_id');
+        return $this->session->get('admin_account_id');
     }
 
     public function checkAuth($node): bool
@@ -97,7 +95,7 @@ class Account
         return in_array($node, $nodes);
     }
 
-    private function verifyPassword(int $account_id, string $password): bool
+    private function verifyPassword($account_id, string $password): bool
     {
         if ($this->db->get('psrphp_admin_account', 'password', [
             'id' => $account_id,

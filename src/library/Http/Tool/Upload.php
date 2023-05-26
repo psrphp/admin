@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Psrphp\Admin\Http\Tool;
 
 use App\Psrphp\Admin\Http\Common;
+use App\Psrphp\Admin\Lib\Response;
 use PsrPHP\Framework\Config;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UploadedFileInterface;
@@ -26,10 +27,10 @@ class Upload extends Common
             $type = $file->getClientMediaType();
 
             if (!in_array($ext, explode(',', $config->get('upload.exts@psrphp.admin', 'jpg,png,gif,zip')))) {
-                return $this->error('不支持的上传类型！');
+                return Response::error('不支持的上传类型！');
             }
             if (!in_array($type, explode(',', $config->get('upload.types@psrphp.admin', 'image/gif,image/jpeg,image/jpg,image/pjpeg,image/x-png,image/png,application/x-zip,application/zip,application/x-zip-compressed')))) {
-                return $this->error('不支持的上传类型！');
+                return Response::error('不支持的上传类型！');
             }
 
             $filename = uniqid();
@@ -39,7 +40,7 @@ class Upload extends Common
             }
             $file->moveTo($path . '/' . $filename . '.' . $ext);
 
-            return $this->success('上传成功！', [
+            return Response::success('上传成功！', [
                 'src' => $this->getRoot() . substr($path, 1) . '/' . $filename . '.' . $ext,
                 'extension' => $ext,
                 'filename' => $file->getClientFilename(),

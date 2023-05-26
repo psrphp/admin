@@ -61,6 +61,6 @@ class Index extends Common
             return $datas;
         })();
 
-        return $this->html($template->renderFromFile('account/index@psrphp/admin', $data));
+        return $template->renderFromFile('account/index@psrphp/admin', $data);
     }
 }
