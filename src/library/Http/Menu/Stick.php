@@ -7,7 +7,7 @@ namespace App\Psrphp\Admin\Http\Menu;
 use App\Psrphp\Admin\Http\Common;
 use App\Psrphp\Admin\Lib\Response;
 use App\Psrphp\Admin\Model\Account;
-use PsrPHP\Framework\Config;
+use PsrPHP\Database\Db;
 use PsrPHP\Request\Request;
 
 /**
@@ -17,10 +17,14 @@ class Stick extends Common
 {
     public function get(
         Request $request,
-        Config $config,
+        Db $db,
         Account $account
     ) {
-        $menus = $config->get('menus.account_' . $account->getAccountId(), []);
+        $menus = json_decode($db->get('psrphp_admin_account_info', 'value', [
+            'account_id' => $account->getAccountId(),
+            'key' => 'psrphp_admin_menu',
+        ]) ?: '[]', true);
+
         $menu = [
             'url' => $request->get('url'),
             'title' => $request->get('title'),
@@ -29,12 +33,20 @@ class Stick extends Common
 
         if ($key !== false) {
             unset($menus[$key]);
-            $config->save('menus.account_' . $account->getAccountId(), $menus);
-            return Response::success('已取消收藏');
         } else {
             $menus[] = $menu;
-            $config->save('menus.account_' . $account->getAccountId(), $menus);
-            return Response::success('已收藏');
         }
+        if ($db->get('psrphp_account_info', '*', [
+            'account_id' => $account->getAccountId(),
+            'key' => 'psrphp_admin_menu',
+        ])) {
+            $db->update('psrphp_account_info', [
+                'value' => json_encode($menus),
+            ], [
+                'account_id' => $account->getAccountId(),
+                'key' => 'psrphp_admin_menu',
+            ]);
+        }
+        return Response::success('成功~');
     }
 }

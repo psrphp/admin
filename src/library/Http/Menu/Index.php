@@ -6,7 +6,7 @@ namespace App\Psrphp\Admin\Http\Menu;
 
 use App\Psrphp\Admin\Http\Common;
 use App\Psrphp\Admin\Model\Account;
-use PsrPHP\Framework\Config;
+use PsrPHP\Database\Db;
 use PsrPHP\Template\Template;
 
 /**
@@ -16,12 +16,14 @@ class Index extends Common
 {
     public function get(
         Template $template,
-        Config $config,
+        Db $db,
         Account $account
     ) {
-        $menus = $config->get('menus.account_' . $account->getAccountId(), []);
         return $template->renderFromFile('menu/index@psrphp/admin', [
-            'menus' => $menus,
+            'menus' => json_decode($db->get('psrphp_admin_account_info', 'value', [
+                'account_id' => $account->getAccountId(),
+                'key' => 'psrphp_admin_menu',
+            ]) ?: '[]', true),
         ]);
     }
 }

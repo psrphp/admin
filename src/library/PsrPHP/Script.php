@@ -55,6 +55,13 @@ CREATE TABLE `prefix_psrphp_admin_account` (
     PRIMARY KEY (`id`) USING BTREE,
     KEY `name` (`name`)
     ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='账户表';
+DROP TABLE IF EXISTS `prefix_psrphp_admin_account_info`;
+CREATE TABLE `prefix_psrphp_admin_account_info` (
+    `account_id` int(10) unsigned NOT NULL,
+    `key` varchar(255) NOT NULL DEFAULT '' COMMENT '键',
+    `value` text NOT NULL DEFAULT '' COMMENT '值',
+    KEY `account_id` (`account_id`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='账户信息表';
 DROP TABLE IF EXISTS `prefix_psrphp_admin_account_role`;
 CREATE TABLE `prefix_psrphp_admin_account_role` (
     `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -85,6 +92,7 @@ str;
     {
         return <<<'str'
 DROP TABLE IF EXISTS `prefix_psrphp_admin_account`;
+DROP TABLE IF EXISTS `prefix_psrphp_admin_account_info`;
 DROP TABLE IF EXISTS `prefix_psrphp_admin_account_role`;
 DROP TABLE IF EXISTS `prefix_psrphp_admin_role`;
 DROP TABLE IF EXISTS `prefix_psrphp_admin_role_node`;
