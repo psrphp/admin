@@ -36,15 +36,21 @@ class Stick extends Common
         } else {
             $menus[] = $menu;
         }
-        if ($db->get('psrphp_account_info', '*', [
+        if ($db->get('psrphp_admin_account_info', '*', [
             'account_id' => $account->getAccountId(),
             'key' => 'psrphp_admin_menu',
         ])) {
-            $db->update('psrphp_account_info', [
+            $db->update('psrphp_admin_account_info', [
                 'value' => json_encode($menus),
             ], [
                 'account_id' => $account->getAccountId(),
                 'key' => 'psrphp_admin_menu',
+            ]);
+        } else {
+            $db->insert('psrphp_admin_account_info', [
+                'account_id' => $account->getAccountId(),
+                'key' => 'psrphp_admin_menu',
+                'value' => json_encode($menus),
             ]);
         }
         return Response::success('成功~');
