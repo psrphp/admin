@@ -9,6 +9,7 @@ use App\Psrphp\Admin\Lib\Response;
 use App\Psrphp\Admin\Model\Account;
 use PsrPHP\Database\Db;
 use PsrPHP\Request\Request;
+use PsrPHP\Router\Router;
 
 /**
  * 收藏菜单
@@ -18,6 +19,7 @@ class Stick extends Common
     public function get(
         Request $request,
         Db $db,
+        Router $router,
         Account $account
     ) {
         $menus = json_decode($db->get('psrphp_admin_account_info', 'value', [
@@ -53,6 +55,6 @@ class Stick extends Common
                 'value' => json_encode($menus),
             ]);
         }
-        return Response::success('成功~');
+        return Response::redirect($router->build('/psrphp/admin/menu/index'));
     }
 }
