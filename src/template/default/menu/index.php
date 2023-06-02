@@ -27,9 +27,10 @@
 </div>
 
 <div class="fs-5 fw-light mb-3 mt-4 text-muted">核心功能</div>
-<div class="d-flex flex-wrap align-items-stretch gap-3">
+<div class="d-flex flex-wrap align-items-stretch gap-3 mb-3">
     {foreach PsrPHP\Framework\Framework::getAppList() as $app}
     {if Composer\InstalledVersions::isInstalled($app['name'])}
+    {if substr($app['name'], 0, 7) == 'psrphp/'}
     {if $menusx = $config->get('admin.menus@' . $app['name'], [])}
     {foreach $menusx as $menu}
     <div class="bg-light px-2 py-1 item">
@@ -43,6 +44,29 @@
         </div>
     </div>
     {/foreach}
+    {/if}
+    {/if}
+    {/if}
+    {/foreach}
+</div>
+<div class="d-flex flex-wrap align-items-stretch gap-3">
+    {foreach PsrPHP\Framework\Framework::getAppList() as $app}
+    {if Composer\InstalledVersions::isInstalled($app['name'])}
+    {if substr($app['name'], 0, 7) != 'psrphp/'}
+    {if $menusx = $config->get('admin.menus@' . $app['name'], [])}
+    {foreach $menusx as $menu}
+    <div class="bg-light px-2 py-1 item">
+        <div class="fs-6 fw-bold">
+            <a class="text-decoration-none" href="{$menu.url}">{$menu.title}</a>
+            {if in_array(array_intersect_key($menu, ['url'=>'','title'=>'']), $menus)}
+            <a class="text-danger" href="{echo $router->build('/psrphp/admin/menu/stick', $menu)}" data-bs-toggle="tooltip" title="取消收藏">★</a>
+            {else}
+            <a class="text-secondary" href="{echo $router->build('/psrphp/admin/menu/stick', $menu)}" data-bs-toggle="tooltip" title="点击收藏">✰</a>
+            {/if}
+        </div>
+    </div>
+    {/foreach}
+    {/if}
     {/if}
     {/if}
     {/foreach}
