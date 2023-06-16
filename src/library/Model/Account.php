@@ -4,10 +4,6 @@ declare(strict_types=1);
 
 namespace App\Psrphp\Admin\Model;
 
-use App\Psrphp\Admin\Http\Auth\Logout;
-use App\Psrphp\Admin\Http\Index;
-use App\Psrphp\Admin\Http\Menu\Index as MenuIndex;
-use App\Psrphp\Admin\Http\Menu\Stick;
 use PsrPHP\Database\Db;
 use PsrPHP\Session\Session;
 use Exception;
@@ -86,10 +82,6 @@ class Account
                     'account_id' => $account_id,
                 ]) ?: ['_'],
             ]);
-            $nodes[] = Logout::class;
-            $nodes[] = Index::class;
-            $nodes[] = MenuIndex::class;
-            $nodes[] = Stick::class;
         }
 
         return in_array($node, $nodes);

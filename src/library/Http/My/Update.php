@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Psrphp\Admin\Http\Account;
+namespace App\Psrphp\Admin\Http\My;
 
 use App\Psrphp\Admin\Http\Common;
 use App\Psrphp\Admin\Lib\Response;
+use App\Psrphp\Admin\Model\Account;
 use PsrPHP\Database\Db;
 use PsrPHP\Request\Request;
 use PsrPHP\Form\Builder;
@@ -15,21 +16,18 @@ use PsrPHP\Form\Field\Hidden;
 use PsrPHP\Form\Field\Input;
 
 /**
- * 设置账户基本信息
+ * 修改账户基本信息
  */
 class Update extends Common
 {
     public function get(
-        Request $request,
+        Account $account,
         Db $db
     ) {
         $account = $db->get('psrphp_admin_account', '*', [
-            'id' => $request->get('id', 0, ['intval']),
+            'id' => $account->getAccountId(),
         ]);
-        if ($account['id'] == 1) {
-            return Response::error('不支持对超级管理员进行该操作~');
-        }
-        $form = new Builder('设置账户基本信息');
+        $form = new Builder('修改账户基本信息');
         $form->addItem(
             (new Row())->addCol(
                 (new Col('col-md-8'))->addItem(
@@ -43,14 +41,12 @@ class Update extends Common
 
     public function post(
         Request $request,
+        Account $account,
         Db $db
     ) {
         $account = $db->get('psrphp_admin_account', '*', [
-            'id' => $request->post('id', 0, ['intval']),
+            'id' => $account->getAccountId(),
         ]);
-        if ($account['id'] == 1) {
-            return Response::error('不支持对超级管理员进行该操作~');
-        }
         if ($db->get('psrphp_admin_account', '*', [
             'name' => $request->post('name'),
             'id[!]' => $account['id'],

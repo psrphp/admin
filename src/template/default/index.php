@@ -47,7 +47,9 @@
             <div>
                 <span>欢迎您</span>
                 <span>:</span>
-                <span>{:$db->get('psrphp_admin_account', 'name', ['id'=>$session->get('admin_account_id')])}</span>
+                <span>
+                    <a href="{echo $router->build('/psrphp/admin/my/update')}" class="link-secondary text-decoration-none small" target="main">[{:$db->get('psrphp_admin_account', 'name', ['id'=>$session->get('admin_account_id')])}]</a>
+                </span>
             </div>
             <div>
                 <a href="{echo $router->build('/psrphp/admin/my/password')}" class="link-secondary text-decoration-none small" target="main">[修改密码]</a>

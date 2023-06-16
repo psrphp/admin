@@ -12,7 +12,6 @@ use PsrPHP\Form\Builder;
 use PsrPHP\Form\Component\Col;
 use PsrPHP\Form\Component\Row;
 use PsrPHP\Form\Field\Input;
-use PsrPHP\Form\Field\Radio;
 use PsrPHP\Request\Request;
 
 /**
@@ -27,14 +26,7 @@ class Create extends Common
             (new Row())->addCol(
                 (new Col('col-md-9'))->addItem(
                     (new Input('账户', 'name')),
-                    (new Input('密码', 'password'))->set('type', 'password'),
-                    (new Radio('状态', 'state', 1, [[
-                        'label' => '允许登陆',
-                        'value' => 1,
-                    ], [
-                        'label' => '禁止登陆',
-                        'value' => 2,
-                    ]]))
+                    (new Input('密码', 'password'))->set('type', 'password')
                 ),
                 (new Col('col-md-3'))->addItem()
             )
@@ -46,10 +38,15 @@ class Create extends Common
         Request $request,
         Db $db
     ) {
+        if ($db->get('psrphp_admin_account', '*', [
+            'name' => $request->post('name'),
+        ])) {
+            return Response::error('账户重复！');
+        }
         $db->insert('psrphp_admin_account', [
             'name' => $request->post('name'),
             'password' => Account::makePassword(trim($request->post('password', '123456'))),
-            'state' => $request->post('state', 1, ['intval']),
+            'state' => 2,
         ]);
         return Response::success('操作成功！', 'javascript:history.go(-2)');
     }
