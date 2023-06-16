@@ -45,8 +45,8 @@ class Login
             $log->record('[' . $request->post('account') . ']登录失败，账号密码不正确~');
             return Response::error('认证失败！');
         } else {
-            $log->record('登录成功');
-            return Response::success('[' . $request->post('account') . ']登录成功');
+            $log->record('[' . $request->post('account') . ']登录成功');
+            return Response::success('登录成功');
         }
     }
 }

@@ -40,7 +40,7 @@ $getclass = function ($size) {
     }
 </script>
 <div class="my-3">
-    <div class="row">
+    <div class="row gy-3">
         {foreach $config->get('diy@psrphp/admin', []) as $key => $vo}
         <div class="{echo $getclass($vo['size'])} position-relative" style="min-height:100px;">
             {if $request->get('diy')}
