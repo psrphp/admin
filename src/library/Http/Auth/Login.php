@@ -36,17 +36,17 @@ class Login
     ): ResponseInterface {
         $captcha = $_POST['captcha'];
         if (!$captcha || $captcha != $session->get('admin_captcha')) {
-            $log->record('登录失败[' . $request->post('account') . ']，验证码无效~');
+            $log->record('[' . $request->post('account') . ']登录失败，验证码无效~');
             return Response::error('验证码无效！');
         }
         $session->delete('admin_captcha');
 
         if (!$account->loginByName($request->post('account'), $request->post('password'))) {
-            $log->record('登录失败[' . $request->post('account') . ']，账号密码不正确~');
+            $log->record('[' . $request->post('account') . ']登录失败，账号密码不正确~');
             return Response::error('认证失败！');
         } else {
             $log->record('登录成功');
-            return Response::success('登录成功');
+            return Response::success('[' . $request->post('account') . ']登录成功');
         }
     }
 }
