@@ -3,6 +3,7 @@
 use App\Psrphp\Admin\Http\Account\Index;
 use App\Psrphp\Admin\Http\Cache\Clear;
 use App\Psrphp\Admin\Http\Diy\Index as DiyIndex;
+use App\Psrphp\Admin\Http\Log\Index as LogIndex;
 use App\Psrphp\Admin\Http\Role\Index as RoleIndex;
 use App\Psrphp\Admin\Model\Account;
 use PsrPHP\Framework\Framework;
@@ -30,6 +31,12 @@ return [
             $menus[] = [
                 'url' => $router->build('/psrphp/admin/role/index'),
                 'title' => '角色管理',
+            ];
+        }
+        if ($account->checkAuth(LogIndex::class)) {
+            $menus[] = [
+                'url' => $router->build('/psrphp/admin/role/index'),
+                'title' => '日志管理',
             ];
         }
         if ($account->checkAuth(Clear::class)) {

@@ -55,6 +55,8 @@ CREATE TABLE `prefix_psrphp_admin_account` (
     PRIMARY KEY (`id`) USING BTREE,
     KEY `name` (`name`)
     ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='账户表';
+INSERT INTO `prefix_psrphp_admin_account` (`id`, `name`, `password`, `state`) VALUES
+(1, 'admin', '74e072086a6fa61008709943da24b82e', 1);
 DROP TABLE IF EXISTS `prefix_psrphp_admin_account_info`;
 CREATE TABLE `prefix_psrphp_admin_account_info` (
     `account_id` int(10) unsigned NOT NULL,
@@ -83,8 +85,19 @@ CREATE TABLE `prefix_psrphp_admin_role_node` (
     `node` varchar(255) NOT NULL DEFAULT '' COMMENT '节点',
     PRIMARY KEY (`id`) USING BTREE
     ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='角色权限表';
-INSERT INTO `prefix_psrphp_admin_account` (`id`, `name`, `password`, `state`) VALUES
-(1, 'admin', '74e072086a6fa61008709943da24b82e', 1);
+DROP TABLE IF EXISTS `prefix_psrphp_admin_log`;
+CREATE TABLE `prefix_psrphp_admin_log` (
+    `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+    `account_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '账户id',
+    `node` varchar(255) NOT NULL DEFAULT '' COMMENT '节点',
+    `method` varchar(255) NOT NULL DEFAULT '' COMMENT '请求方法',
+    `data` text NOT NULL DEFAULT '' COMMENT '数据',
+    `ip` char(15) NOT NULL DEFAULT '' COMMENT 'IP',
+    `time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '时间',
+    `tips` varchar(255) NOT NULL DEFAULT '' COMMENT '提示',
+    PRIMARY KEY (`id`) USING BTREE,
+    KEY `node` (`node`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='日志表';
 str;
     }
 
@@ -96,6 +109,7 @@ DROP TABLE IF EXISTS `prefix_psrphp_admin_account_info`;
 DROP TABLE IF EXISTS `prefix_psrphp_admin_account_role`;
 DROP TABLE IF EXISTS `prefix_psrphp_admin_role`;
 DROP TABLE IF EXISTS `prefix_psrphp_admin_role_node`;
+DROP TABLE IF EXISTS `prefix_psrphp_admin_log`;
 str;
     }
 }
