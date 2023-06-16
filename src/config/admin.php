@@ -35,7 +35,7 @@ return [
         }
         if ($account->checkAuth(LogIndex::class)) {
             $menus[] = [
-                'url' => $router->build('/psrphp/admin/role/index'),
+                'url' => $router->build('/psrphp/admin/log/index'),
                 'title' => '日志管理',
             ];
         }

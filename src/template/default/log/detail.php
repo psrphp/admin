@@ -22,6 +22,10 @@
                 </td>
             </tr>
             <tr>
+                <th>tips</th>
+                <td>{$log.tips}</td>
+            </tr>
+            <tr>
                 <th>method</th>
                 <td>{$log.method}</td>
             </tr>

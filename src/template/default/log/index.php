@@ -35,6 +35,7 @@
                 <th>方法</th>
                 <th>IP</th>
                 <th>时间</th>
+                <th>提示</th>
                 <th>详情</th>
             </tr>
         </thead>
@@ -53,6 +54,7 @@
                 <td>{$v.method}</td>
                 <td>{$v.ip}</td>
                 <td>{:date('Y-m-d H:i:s', $v['time'])}</td>
+                <td>{$v.tips}</td>
                 <td>
                     <a href="{:$router->build('/psrphp/admin/log/detail', ['id'=>$v['id']])}">详情</a>
                 </td>
