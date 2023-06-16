@@ -12,7 +12,6 @@ use PsrPHP\Request\Request;
 use PsrPHP\Form\Builder;
 use PsrPHP\Form\Component\Col;
 use PsrPHP\Form\Component\Row;
-use PsrPHP\Form\Field\Hidden;
 use PsrPHP\Form\Field\Input;
 
 /**
@@ -31,7 +30,6 @@ class Update extends Common
         $form->addItem(
             (new Row())->addCol(
                 (new Col('col-md-8'))->addItem(
-                    (new Hidden('id', $account['id'])),
                     (new Input('账户', 'name', $account['name']))
                 )
             )
