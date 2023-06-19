@@ -60,7 +60,7 @@
             <li class="nav-item">
                 <a class="nav-link active" href="{echo $router->build('/psrphp/admin/index?t=home')}" target="main">主页</a>
             </li>
-            {foreach $menus as $menu}
+            {foreach $stick_menus as $menu}
             <li class="nav-item">
                 <a class="nav-link" href="{echo $menu['url']}" target="main">{$menu.title}</a>
             </li>

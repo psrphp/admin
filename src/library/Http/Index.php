@@ -30,7 +30,7 @@ class Index extends Common
             default:
                 return $template->renderFromFile('index@psrphp/admin', [
                     'account' => $account,
-                    'menus' => json_decode($db->get('psrphp_admin_account_info', 'value', [
+                    'stick_menus' => json_decode($db->get('psrphp_admin_account_info', 'value', [
                         'account_id' => $account->getAccountId(),
                         'key' => 'psrphp_admin_menu',
                     ]) ?: '[]', true),
