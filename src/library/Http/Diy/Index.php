@@ -7,8 +7,9 @@ namespace App\Psrphp\Admin\Http\Diy;
 use App\Psrphp\Admin\Http\Common;
 use App\Psrphp\Admin\Lib\Json;
 use App\Psrphp\Admin\Lib\Response;
+use App\Psrphp\Admin\Model\Account;
+use App\Psrphp\Admin\Model\Auth;
 use Composer\InstalledVersions;
-use PsrPHP\Framework\Config;
 use PsrPHP\Framework\Framework;
 use PsrPHP\Request\Request;
 use PsrPHP\Template\Template;
@@ -56,45 +57,46 @@ class Index extends Common
     }
 
     public function post(
-        Config $config,
-        Request $request
+        Request $request,
+        Account $account,
+        Auth $auth
     ) {
         switch ($request->post('t')) {
             case 'add':
-                $diy = $config->get('diy@psrphp/admin', []);
+                $diy = $account->getData($auth->getId(), 'admin_diy', []);
                 $diy[] = [
                     'widget' => $request->post('widget'),
                     'size' => $request->post('size'),
                 ];
-                $config->save('diy@psrphp/admin', $diy);
+                $account->setData($auth->getId(), 'admin_diy', $diy);
                 return Response::success('操作成功！');
                 break;
 
             case 'left':
-                $diy = $config->get('diy@psrphp/admin', []);
+                $diy = $account->getData($auth->getId(), 'admin_diy', []);
                 $index = $request->post('index');
                 $tmp = $diy[$index - 1];
                 $diy[$index - 1] = $diy[$index];
                 $diy[$index] = $tmp;
-                $config->save('diy@psrphp/admin', $diy);
+                $account->setData($auth->getId(), 'admin_diy', $diy);
                 return Response::success('操作成功！');
                 break;
 
             case 'right':
-                $diy = $config->get('diy@psrphp/admin', []);
+                $diy = $account->getData($auth->getId(), 'admin_diy', []);
                 $index = $request->post('index');
                 $tmp = $diy[$index + 1];
                 $diy[$index + 1] = $diy[$index];
                 $diy[$index] = $tmp;
-                $config->save('diy@psrphp/admin', $diy);
+                $account->setData($auth->getId(), 'admin_diy', $diy);
                 return Response::success('操作成功！');
                 break;
 
             case 'remove':
-                $diy = $config->get('diy@psrphp/admin', []);
+                $diy = $account->getData($auth->getId(), 'admin_diy', []);
                 $index = $request->post('index');
                 unset($diy[$index]);
-                $config->save('diy@psrphp/admin', array_values($diy));
+                $account->setData($auth->getId(), 'admin_diy', $diy);
                 return Response::success('操作成功！');
                 break;
 

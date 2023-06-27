@@ -28,7 +28,7 @@
                         挂件列表
                     </button>
                     <a class="btn btn-sm btn-danger text-decoration-none" href="{echo $router->build('/psrphp/admin/index', ['t'=>'home'])}">
-                        退出编辑
+                        退出DIY
                     </a>
                 </div>
             </div>

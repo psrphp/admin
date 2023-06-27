@@ -1,10 +1,4 @@
 {include common/header@psrphp/admin}
-
-<div class="my-4">
-    <div class="h1">欢迎使用</div>
-    <div class="text-muted fw-light">系统的所有功能列表</div>
-</div>
-
 <?php
 $getclass = function ($size) {
     switch ($size) {
@@ -41,7 +35,8 @@ $getclass = function ($size) {
 </script>
 <div class="my-3">
     <div class="row gy-3">
-        {foreach $config->get('diy@psrphp/admin', []) as $key => $vo}
+        {if $diys}
+        {foreach $diys as $key => $vo}
         <div class="{echo $getclass($vo['size'])} position-relative" style="min-height:100px;">
             {if $request->get('diy')}
             <div class="position-absolute top-0 end-0 bg-warning bg-opacity-10 border" style="width:100%;height:100%;z-index:100;">
@@ -49,10 +44,10 @@ $getclass = function ($size) {
                     {if $key}
                     <button type="button" class="btn btn-sm btn-primary" onclick="diy({t:'left', index:'{$key}'})">左移</button>
                     {/if}
-                    {if $key+1 < count($config->get('diy@psrphp/admin', []))}
-                        <button type="button" class="btn btn-sm btn-primary" onclick="diy({t:'right', index:'{$key}'})">右移</button>
-                        {/if}
-                        <button type="button" class="btn btn-sm btn-primary" onclick="diy({t:'remove', index:'{$key}'})">删除</button>
+                    {if count($diys)-$key-1}
+                    <button type="button" class="btn btn-sm btn-primary" onclick="diy({t:'right', index:'{$key}'})">右移</button>
+                    {/if}
+                    <button type="button" class="btn btn-sm btn-primary" onclick="diy({t:'remove', index:'{$key}'})">移除</button>
                 </div>
             </div>
             {/if}
@@ -61,6 +56,16 @@ $getclass = function ($size) {
             </div>
         </div>
         {/foreach}
+        {else}
+        <div class="col">
+            <div class="alert alert-success" role="alert">
+                <h4 class="alert-heading">欢迎!</h4>
+                <hr>
+                <p>当前页面没有内容，您可以通过挂件，定义您关心的内容哦~</p>
+                <a href="{echo $router->build('/psrphp/admin/diy/index')}" class="btn btn-primary">开始自定义本页面</a>
+            </div>
+        </div>
+        {/if}
     </div>
 </div>
 

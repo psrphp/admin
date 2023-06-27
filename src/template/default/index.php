@@ -60,14 +60,20 @@
             <li class="nav-item">
                 <a class="nav-link active" href="{echo $router->build('/psrphp/admin/index?t=home')}" target="main">主页</a>
             </li>
+            {if $stick_menus}
             {foreach $stick_menus as $menu}
             <li class="nav-item">
                 <a class="nav-link" href="{echo $menu['url']}" target="main">{$menu.title}</a>
             </li>
             {/foreach}
             <li class="nav-item">
-                <a class="nav-link" href="{echo $router->build('/psrphp/admin/menu/index')}" target="main">更多</a>
+                <a class="nav-link" href="{echo $router->build('/psrphp/admin/menu/index')}" target="main">更多...</a>
             </li>
+            {else}
+            <li class="nav-item">
+                <a class="nav-link" href="{echo $router->build('/psrphp/admin/menu/index')}" target="main">自定义菜单...</a>
+            </li>
+            {/if}
         </ul>
         <script>
             $(function() {

@@ -25,6 +25,7 @@ class Index extends Common
                 return $template->renderFromFile('home@psrphp/admin', [
                     'auth' => $auth,
                     'account' => $account,
+                    'diys' => $account->getData($auth->getId(), 'admin_diy', []),
                 ]);
                 break;
 
