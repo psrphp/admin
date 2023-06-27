@@ -8,8 +8,7 @@ use Exception;
 
 class Json
 {
-
-    public function read($file, $default = null)
+    public static function readFromFile(string $file, $default = null)
     {
         if (!file_exists($file)) {
             return $default;
@@ -19,7 +18,6 @@ class Json
         }
 
         $res = json_decode($res, true);
-
         if ($res === null) {
             throw new Exception('json文件无法被解码: [' . $file . '].');
         }

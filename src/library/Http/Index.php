@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Psrphp\Admin\Http;
 
 use App\Psrphp\Admin\Model\Account;
-use PsrPHP\Database\Db;
+use App\Psrphp\Admin\Model\Auth;
 use PsrPHP\Request\Request;
 use PsrPHP\Template\Template;
 
@@ -17,23 +17,22 @@ class Index extends Common
     public function get(
         Template $template,
         Request $request,
-        Db $db,
+        Auth $auth,
         Account $account
     ) {
         switch ($request->get('t')) {
             case 'home':
                 return $template->renderFromFile('home@psrphp/admin', [
+                    'auth' => $auth,
                     'account' => $account,
                 ]);
                 break;
 
             default:
                 return $template->renderFromFile('index@psrphp/admin', [
+                    'auth' => $auth,
                     'account' => $account,
-                    'stick_menus' => json_decode($db->get('psrphp_admin_account_info', 'value', [
-                        'account_id' => $account->getAccountId(),
-                        'key' => 'psrphp_admin_menu',
-                    ]) ?: '[]', true),
+                    'stick_menus' => $account->getData($auth->getId(), 'psrphp_admin_menu', []),
                 ]);
                 break;
         }

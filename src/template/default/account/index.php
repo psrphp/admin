@@ -44,7 +44,7 @@
                 <th>#</th>
                 <th>账户</th>
                 <th>状态</th>
-                <th>角色</th>
+                <th>职位</th>
                 <th>操作</th>
             </tr>
         </thead>
@@ -55,20 +55,19 @@
                 <td>{$v.name}</td>
                 <td>{:$v['state']==1?'允许登陆':'禁止登陆'}</td>
                 <td>
-                    {if $v['id']==1}
-                    <span class="badge bg-danger">超级管理员</span>
-                    {else}
                     {foreach $v['roles'] as $role}
-                    <span class="badge bg-primary">{$role.name}</span>
+                    <a href="{:$router->build('/psrphp/admin/role/index', ['department_id'=>$role['department_id']])}">{$role.name}</a>
                     {/foreach}
-                    {/if}
                 </td>
                 <td>
-                    <a href="{:$router->build('/psrphp/admin/account/update', ['id'=>$v['id']])}">编辑</a>
-                    <a href="{:$router->build('/psrphp/admin/account/role', ['id'=>$v['id']])}">设置角色</a>
-                    <a href="{:$router->build('/psrphp/admin/account/password', ['id'=>$v['id']])}">重置密码</a>
+                    {if $v['id']!=1}
+                    <a href="{:$router->build('/psrphp/admin/account/name', ['id'=>$v['id']])}">设置账户名</a>
                     <a href="{:$router->build('/psrphp/admin/account/state', ['id'=>$v['id']])}">设置状态</a>
+                    <a href="{:$router->build('/psrphp/admin/account/password', ['id'=>$v['id']])}">重置密码</a>
                     <a href="{:$router->build('/psrphp/admin/account/delete', ['id'=>$v['id']])}" onclick="return confirm('确定删除吗？删除后不可恢复！');">删除</a>
+                    {else}
+                    <span class="badge bg-danger">超级管理员</span>
+                    {/if}
                 </td>
             </tr>
             {/foreach}

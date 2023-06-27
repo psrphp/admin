@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Psrphp\Admin\Http\Tool;
 
-use App\Psrphp\Admin\Traits\RestfulTrait;
+use App\Psrphp\Admin\Http\Common;
 use Gregwar\Captcha\CaptchaBuilder;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -13,10 +13,8 @@ use PsrPHP\Session\Session;
 /**
  * 登录验证码，无需权限认证
  */
-class Captcha
+class Captcha extends Common
 {
-    use RestfulTrait;
-
     public function get(
         Session $session,
         ResponseFactoryInterface $responseFactory,

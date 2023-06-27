@@ -36,7 +36,8 @@ class Create extends Common
 
     public function post(
         Request $request,
-        Db $db
+        Db $db,
+        Account $account
     ) {
         if ($db->get('psrphp_admin_account', '*', [
             'name' => $request->post('name'),
@@ -45,7 +46,7 @@ class Create extends Common
         }
         $db->insert('psrphp_admin_account', [
             'name' => $request->post('name'),
-            'password' => Account::makePassword(trim($request->post('password', '123456'))),
+            'password' => $account->makePassword(trim($request->post('password', '123456'))),
             'state' => 2,
         ]);
         return Response::success('操作成功！', 'javascript:history.go(-2)');

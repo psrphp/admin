@@ -45,7 +45,7 @@
                 <td>{$v.id}</td>
                 <td>
                     {if $v['account_id']}
-                    <span>{:$db->get('psrphp_admin_account', 'name', ['id'=>$v['account_id']])}</span>
+                    <span>{$account->getName($v['account_id'])}</span>
                     {else}
                     <span>-</span>
                     {/if}

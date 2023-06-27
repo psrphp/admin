@@ -15,7 +15,7 @@
                 <th>account</th>
                 <td>
                     {if $log['account_id']}
-                    <span>{:$db->get('psrphp_admin_account', 'name', ['id'=>$log['account_id']])}</span>
+                    <span>{$account->getName($log['account_id'])}</span>
                     {else}
                     <span>-</span>
                     {/if}

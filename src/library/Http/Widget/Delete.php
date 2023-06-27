@@ -17,8 +17,7 @@ use ReflectionClass;
 class Delete extends Common
 {
     public function get(
-        Request $request,
-        Json $json
+        Request $request
     ) {
         $dir = dirname(dirname(dirname((new ReflectionClass(InstalledVersions::class))->getFileName()))) . '/widget/';
         $name = $request->get('name', '');
@@ -30,7 +29,7 @@ class Delete extends Common
             unlink($file);
         }
 
-        $cfg = $json->read($dir . '/config.json', []);
+        $cfg = Json::readFromFile($dir . '/config.json', []);
         unset($cfg[$name]);
         file_put_contents($dir . '/config.json', json_encode($cfg, JSON_UNESCAPED_UNICODE));
 

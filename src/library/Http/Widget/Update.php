@@ -22,8 +22,7 @@ use ReflectionClass;
 class Update extends Common
 {
     public function get(
-        Request $request,
-        Json $json
+        Request $request
     ) {
         $dir = dirname(dirname(dirname((new ReflectionClass(InstalledVersions::class))->getFileName()))) . '/widget/';
         $name = $request->get('name', '');
@@ -36,7 +35,7 @@ class Update extends Common
         }
         $code = file_get_contents($file);
 
-        $cfg = $json->read($dir . 'config.json', []);
+        $cfg = Json::readFromFile($dir . 'config.json', []);
         $tips = $cfg[$name]['tips'] ?? '';
 
         $form = new Builder('编辑挂件');
@@ -53,8 +52,7 @@ class Update extends Common
     }
 
     public function post(
-        Request $request,
-        Json $json
+        Request $request
     ) {
         $dir = dirname(dirname(dirname((new ReflectionClass(InstalledVersions::class))->getFileName()))) . '/widget/';
         $name = $request->post('name', '');
@@ -67,7 +65,7 @@ class Update extends Common
         }
         file_put_contents($file, $request->post('code'));
 
-        $cfg = $json->read($dir . 'config.json', []);
+        $cfg = Json::readFromFile($dir . 'config.json', []);
         $cfg[$name]['tips'] = $request->post('tips', '');
         file_put_contents($dir . 'config.json', json_encode($cfg, JSON_UNESCAPED_UNICODE));
 

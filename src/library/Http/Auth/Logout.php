@@ -6,8 +6,9 @@ namespace App\Psrphp\Admin\Http\Auth;
 
 use App\Psrphp\Admin\Http\Common;
 use App\Psrphp\Admin\Lib\Response;
-use App\Psrphp\Admin\Model\Account;
+use App\Psrphp\Admin\Model\Auth;
 use Psr\Http\Message\ResponseInterface;
+use Throwable;
 
 /**
  * 退出后台
@@ -15,12 +16,13 @@ use Psr\Http\Message\ResponseInterface;
 class Logout extends Common
 {
     public function get(
-        Account $account
+        Auth $auth
     ): ResponseInterface {
-        if ($account->logout()) {
+        try {
+            $auth->logout();
             return Response::success('已退出');
-        } else {
-            return Response::error('操作失败！');
+        } catch (Throwable $th) {
+            return Response::error($th->getMessage());
         }
     }
 }

@@ -16,8 +16,7 @@ class Delete extends Common
 {
     public function post(
         Request $request,
-        Config $config,
-        Dir $dir
+        Config $config
     ) {
         $name = $request->post('name');
 
@@ -26,7 +25,7 @@ class Delete extends Common
         }
 
         $root = dirname(dirname(dirname((new ReflectionClass(InstalledVersions::class))->getFileName())));
-        $dir->del($root . '/theme/' . $name);
+        Dir::del($root . '/theme/' . $name);
 
         $theme = $config->get('theme', []);
         $key = array_search($name, $theme);

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Psrphp\Admin\Http\Log;
 
 use App\Psrphp\Admin\Http\Common;
+use App\Psrphp\Admin\Model\Account;
 use PsrPHP\Database\Db;
 use PsrPHP\Pagination\Pagination;
 use PsrPHP\Request\Request;
@@ -19,6 +20,7 @@ class Index extends Common
         Template $template,
         Request $request,
         Db $db,
+        Account $account,
         Pagination $pagination
     ) {
 
@@ -39,6 +41,7 @@ class Index extends Common
         ];
         $data['pages'] = $pagination->render($page, $total, $pagenum);
         $data['datas'] = $db->select('psrphp_admin_log', '*', $where);
+        $data['account'] = $account;
 
         return $template->renderFromFile('log/index@psrphp/admin', $data);
     }

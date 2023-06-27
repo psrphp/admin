@@ -8,7 +8,7 @@ use Exception;
 
 class Curl
 {
-    public function get($url, array $headers = [], int $time_out = 5)
+    public static function get($url, array $headers = [], int $time_out = 5)
     {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -36,7 +36,7 @@ class Curl
         return $response;
     }
 
-    public function post($url, array $data, array $headers = [], int $time_out = 5)
+    public static function post($url, array $data, array $headers = [], int $time_out = 5)
     {
         $data = http_build_query($data);
 

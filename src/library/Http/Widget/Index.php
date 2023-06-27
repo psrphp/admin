@@ -17,14 +17,13 @@ use ReflectionClass;
 class Index extends Common
 {
     public function get(
-        Template $template,
-        Json $json
+        Template $template
     ) {
         $widgets = [];
 
         $widgets['自定义'] = [];
         $dir = dirname(dirname(dirname((new ReflectionClass(InstalledVersions::class))->getFileName()))) . '/widget/';
-        $cfg = $json->read($dir . 'config.json', []);
+        $cfg = Json::readFromFile($dir . 'config.json', []);
 
         foreach (glob($dir . '*.php') as $file) {
             $name = substr($file, strlen($dir), -4);
@@ -38,7 +37,7 @@ class Index extends Common
         foreach (Framework::getAppList() as $app) {
             $widgets[$app['name']] = [];
             $dir = $app['dir'] . '/src/widget';
-            $cfg = $json->read($dir . '/config.json', []);
+            $cfg = Json::readFromFile($dir . '/config.json', []);
             foreach (glob($dir . '/*.php') as $file) {
                 $name = substr($file, strlen($dir) + 1, -4);
                 $widgets[$app['name']][$name] = [

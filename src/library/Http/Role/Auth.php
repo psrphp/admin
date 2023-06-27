@@ -19,9 +19,9 @@ use PsrPHP\Template\Template;
 use ReflectionClass;
 
 /**
- * 给角色设置权限
+ * 给职位设置权限
  */
-class Node extends Common
+class Auth extends Common
 {
     public function get(
         Request $request,
@@ -36,7 +36,7 @@ class Node extends Common
             (new Row())->addCol(
                 (new Col('col-md-8'))->addItem(
                     (new Hidden('id', $role['id'])),
-                    (new Input('角色名称', 'name', $role['name']))->set('disabled', true),
+                    (new Input('职位名称', 'name', $role['name']))->set('disabled', true),
                     (new Html((function () use ($db, $template, $role): string {
                         $nodes = [];
                         foreach (Framework::getAppList() as $app) {
@@ -44,7 +44,7 @@ class Node extends Common
                                 $nodes[$app['name']] = $tmp;
                             }
                         }
-                        $values = $db->select('psrphp_admin_role_node', 'node', [
+                        $values = $db->select('psrphp_admin_auth', 'node', [
                             'role_id' => $role['id'],
                         ]);
                         $tpl = <<<'str'
@@ -90,7 +90,7 @@ str;
             'id' => $request->post('id', 0, ['intval']),
         ]);
 
-        $db->delete('psrphp_admin_role_node', [
+        $db->delete('psrphp_admin_auth', [
             'role_id' => $role['id'],
         ]);
         if ($request->post('nodes')) {
@@ -101,7 +101,7 @@ str;
                     'node' => $node,
                 ];
             }
-            $db->insert('psrphp_admin_role_node', $nodes);
+            $db->insert('psrphp_admin_auth', $nodes);
         }
 
         return Response::success('操作成功！', 'javascript:history.go(-2)');

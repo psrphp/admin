@@ -10,7 +10,7 @@ use PsrPHP\Database\Db;
 use PsrPHP\Request\Request;
 
 /**
- * 删除角色
+ * 删除职位
  */
 class Delete extends Common
 {
@@ -24,7 +24,7 @@ class Delete extends Common
         $db->delete('psrphp_admin_account_role', [
             'role_id' => $request->get('id'),
         ]);
-        $db->delete('psrphp_admin_role_node', [
+        $db->delete('psrphp_admin_auth', [
             'role_id' => $request->get('id'),
         ]);
         return Response::success('操作成功！');

@@ -6,8 +6,7 @@ namespace App\Psrphp\Admin\Lib;
 
 class Dir
 {
-
-    public function del($dir): bool
+    public static function del($dir): bool
     {
         if (is_dir($dir)) {
             $dh = opendir($dir);
@@ -17,7 +16,7 @@ class Dir
                     if (!is_dir($fullpath)) {
                         unlink($fullpath);
                     } else {
-                        $this->del($fullpath);
+                        self::del($fullpath);
                     }
                 }
             }
@@ -27,7 +26,7 @@ class Dir
         return true;
     }
 
-    public function copy($source, $dest): bool
+    public static function copy($source, $dest): bool
     {
         if (!file_exists($dest)) mkdir($dest, 0644, true);
         $handle = opendir($source);
@@ -36,7 +35,7 @@ class Dir
             $_source = $source . '/' . $item;
             $_dest = $dest . '/' . $item;
             if (is_file($_source)) copy($_source, $_dest);
-            if (is_dir($_source)) $this->copy($_source, $_dest);
+            if (is_dir($_source)) self::copy($_source, $_dest);
         }
         closedir($handle);
         return true;

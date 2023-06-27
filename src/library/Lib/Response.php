@@ -108,7 +108,7 @@ class Response
         <div style="font-size:150px;letter-spacing: 25px;">{if $errcode}:({else}:){/if}</div>
         <div style="margin: 20px auto;font-size: 38px;letter-spacing: 2px;">{$message}</div>
         {if $errcode}
-        <div style="margin: 20px auto;letter-spacing: 2px;">错误代码:{$errcode}</div>
+        <div style="margin: 5px auto;letter-spacing: 2px;color:gray;">错误代码:{$errcode}</div>
         {/if}
         {if isset($redirect_url)}
         <a style="margin: 20px auto;font-size:18px;text-decoration: none;letter-spacing: 1px;color: #4b72ff;" href="{echo $redirect_url}" id="jump">跳转中</a> <span id="time">3</span><span>s</span>

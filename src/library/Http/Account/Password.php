@@ -45,7 +45,8 @@ class Password extends Common
 
     public function post(
         Request $request,
-        Db $db
+        Db $db,
+        Account $accountModel
     ) {
         $account = $db->get('psrphp_admin_account', '*', [
             'id' => $request->post('id', 0, ['intval']),
@@ -55,7 +56,7 @@ class Password extends Common
         }
 
         $db->update('psrphp_admin_account', [
-            'password' => Account::makePassword(trim($request->post('password')))
+            'password' => $accountModel->makePassword(trim($request->post('password')))
         ], [
             'id' => $account['id'],
         ]);

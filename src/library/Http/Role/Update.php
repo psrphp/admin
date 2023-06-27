@@ -12,10 +12,11 @@ use PsrPHP\Form\Component\Col;
 use PsrPHP\Form\Component\Row;
 use PsrPHP\Form\Field\Hidden;
 use PsrPHP\Form\Field\Input;
+use PsrPHP\Form\Field\Select;
 use PsrPHP\Request\Request;
 
 /**
- * 编辑角色信息
+ * 编辑职位信息
  */
 class Update extends Common
 {
@@ -26,12 +27,17 @@ class Update extends Common
         $role = $db->get('psrphp_admin_role', '*', [
             'id' => $request->get('id', 0, ['intval']),
         ]);
-        $form = new Builder('编辑角色');
+        $form = new Builder('编辑职位');
         $form->addItem(
             (new Row())->addCol(
                 (new Col('col-md-8'))->addItem(
                     (new Hidden('id', $role['id'])),
-                    (new Input('角色名称', 'name', $role['name']))
+                    (new Input('职位名称', 'name', $role['name'])),
+                    (new Select('类型', 'director', $role['director'], [
+                        '1' => '主管',
+                        '2' => '副主管',
+                        '0' => '普通成员',
+                    ]))
                 )
             )
         );
@@ -48,6 +54,7 @@ class Update extends Common
 
         $update = array_intersect_key($request->post(), [
             'name' => '',
+            'director' => '',
         ]);
 
         $db->update('psrphp_admin_role', $update, [

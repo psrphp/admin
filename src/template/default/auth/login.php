@@ -48,7 +48,7 @@
             <div class="py-4 text-center border-bottom border-1 fs-1 fw-bold text-success">登&nbsp;&nbsp;录</div>
             <form action="{echo $router->build('/psrphp/admin/auth/login')}" id="loginform" method="POST" style="padding: 35px 35px 35px 35px;">
                 <div class="mb-4">
-                    <input type="text" name="account" class="form-control form-control-lg" placeholder="账户" autocomplete="off" required>
+                    <input type="text" name="name" class="form-control form-control-lg" placeholder="账户" autocomplete="off" required>
                 </div>
                 <div class="mb-4">
                     <input type="password" name="password" class="form-control form-control-lg" placeholder="密码" autocomplete="off" required>

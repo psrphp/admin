@@ -6,8 +6,8 @@ namespace App\Psrphp\Admin\Http\Menu;
 
 use App\Psrphp\Admin\Http\Common;
 use App\Psrphp\Admin\Model\Account;
+use App\Psrphp\Admin\Model\Auth;
 use Composer\InstalledVersions;
-use PsrPHP\Database\Db;
 use PsrPHP\Framework\Config;
 use PsrPHP\Framework\Framework;
 use PsrPHP\Router\Router;
@@ -20,7 +20,7 @@ class Index extends Common
 {
     public function get(
         Template $template,
-        Db $db,
+        Auth $auth,
         Account $account,
         Config $config,
         Router $router
@@ -30,7 +30,7 @@ class Index extends Common
         foreach (Framework::getAppList() as $app) {
             foreach ($config->get('admin.menus@' . $app['name'], []) as $value) {
                 $value['url'] = $router->build($this->buildPathFromNode($value['node'] ?? ''), $value['query'] ?? []);
-                $value['auth'] = $account->checkAuth($value['node'] ?? '');
+                $value['auth'] = $account->checkAuth($auth->getId(), $value['node'] ?? '');
                 $value['plugin'] = !InstalledVersions::isInstalled($app['name']);
                 $value['core'] = $value['plugin'] ? false : (substr($app['name'], 0, 7) == 'psrphp/');
                 $menus[] = $value;
@@ -38,10 +38,7 @@ class Index extends Common
         }
 
         return $template->renderFromFile('menu/index@psrphp/admin', [
-            'stick_menus' => json_decode($db->get('psrphp_admin_account_info', 'value', [
-                'account_id' => $account->getAccountId(),
-                'key' => 'psrphp_admin_menu',
-            ]) ?: '[]', true),
+            'stick_menus' => $account->getData($auth->getId(), 'psrphp_admin_menu', []),
             'menus' => $menus,
         ]);
     }

@@ -6,6 +6,7 @@ namespace App\Psrphp\Admin\Http\Log;
 
 use App\Psrphp\Admin\Http\Common;
 use App\Psrphp\Admin\Lib\Response;
+use App\Psrphp\Admin\Model\Account;
 use PsrPHP\Database\Db;
 use PsrPHP\Request\Request;
 use PsrPHP\Template\Template;
@@ -18,6 +19,7 @@ class Detail extends Common
     public function get(
         Request $request,
         Db $db,
+        Account $account,
         Template $template
     ) {
         if (!$log = $db->get('psrphp_admin_log', '*', [
@@ -27,6 +29,7 @@ class Detail extends Common
         }
         return $template->renderFromFile('log/detail@psrphp/admin', [
             'log' => $log,
+            'account' => $account,
         ]);
     }
 }

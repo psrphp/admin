@@ -48,7 +48,7 @@
                 <span>欢迎您</span>
                 <span>:</span>
                 <span>
-                    <a href="{echo $router->build('/psrphp/admin/my/update')}" class="link-secondary text-decoration-none small" target="main">[{:$db->get('psrphp_admin_account', 'name', ['id'=>$session->get('admin_account_id')])}]</a>
+                    <a href="{echo $router->build('/psrphp/admin/my/name')}" target="main">{$account->getName($auth->getId())}</a>
                 </span>
             </div>
             <div>

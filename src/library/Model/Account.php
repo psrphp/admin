@@ -4,70 +4,37 @@ declare(strict_types=1);
 
 namespace App\Psrphp\Admin\Model;
 
-use PsrPHP\Database\Db;
-use PsrPHP\Session\Session;
 use Exception;
+use PsrPHP\Database\Db;
 
 class Account
 {
 
     private $db;
-    private $session;
 
     public function __construct(
-        Session $session,
         Db $db
     ) {
-        $this->session = $session;
         $this->db = $db;
     }
 
-    public function isLogin(): bool
+    public function getId(string $name): ?int
     {
-        return $this->session->has('admin_account_id');
-    }
-
-    public function loginById($account_id, string $password): bool
-    {
-        if ($this->verifyPassword($account_id, $password)) {
-            $this->session->set('admin_account_id', $account_id);
-            return true;
-        }
-        return false;
-    }
-
-    public function loginByName(string $name, string $password): bool
-    {
-        if (!$account_id = $this->db->get('psrphp_admin_account', 'id', [
+        return $this->db->get('psrphp_admin_account', 'id', [
             'name' => $name,
-        ])) {
-            return false;
-        }
-        if ($this->verifyPassword($account_id, $password)) {
-            $this->session->set('admin_account_id', $account_id);
-            return true;
-        }
-        return false;
+        ]) ?: null;
     }
 
-    public function logout(): bool
+    public function getName(int $id): ?string
     {
-        $this->session->delete('admin_account_id');
-        return true;
+        return $this->db->get('psrphp_admin_account', 'name', [
+            'id' => $id,
+        ]) ?: null;
     }
 
-    public function getAccountId()
+    public function checkAuth(int $id, string $node): bool
     {
-        if (!$this->isLogin()) {
-            throw new Exception("未登录");
-        }
-        return $this->session->get('admin_account_id');
-    }
-
-    public function checkAuth($node): bool
-    {
-        $account_id = $this->getAccountId();
-        if ($account_id == 1) {
+        if ($id == 1) {
             return true;
         }
 
@@ -77,9 +44,9 @@ class Account
 
         static $nodes;
         if (!$nodes) {
-            $nodes = $this->db->select('psrphp_admin_role_node', 'node', [
+            $nodes = $this->db->select('psrphp_admin_auth', 'node', [
                 'role_id' => $this->db->select('psrphp_admin_account_role', 'role_id', [
-                    'account_id' => $account_id,
+                    'account_id' => $id,
                 ]) ?: ['_'],
             ]);
         }
@@ -87,17 +54,74 @@ class Account
         return in_array($node, $nodes);
     }
 
-    private function verifyPassword($account_id, string $password): bool
+    public function setName(int $id, string $name)
+    {
+        if ($this->db->get('psrphp_admin_account', '*', [
+            'name' => $name,
+            'id[!]' => $id,
+        ])) {
+            throw new Exception('账户重复！');
+        }
+        $this->db->update('psrphp_admin_account', [
+            'name' => $name,
+        ], [
+            'id' => $id,
+        ]);
+    }
+
+    public function setPassword(int $id, string $password)
+    {
+        $this->db->update('psrphp_admin_account', [
+            'password' => $this->makePassword($password)
+        ], [
+            'id' => $id,
+        ]);
+    }
+
+    public function setData(int $id, string $key, $value)
+    {
+        if ($this->db->get('psrphp_admin_info', '*', [
+            'account_id' => $id,
+            'key' => $key,
+        ])) {
+            $this->db->update('psrphp_admin_info', [
+                'value' => serialize($value),
+            ], [
+                'account_id' => $id,
+                'key' => $key,
+            ]);
+        } else {
+            $this->db->insert('psrphp_admin_info', [
+                'account_id' => $id,
+                'key' => $key,
+                'value' => serialize($value),
+            ]);
+        }
+    }
+
+    public function getData(int $id, string $key, $default = null)
+    {
+        if ($data = $this->db->get('psrphp_admin_info', '*', [
+            'account_id' => $id,
+            'key' => $key,
+        ])) {
+            return unserialize($data['value']);
+        } else {
+            return $default;
+        }
+    }
+
+    public function checkPassword(int $id, string $password): bool
     {
         if ($this->db->get('psrphp_admin_account', 'password', [
-            'id' => $account_id,
-        ]) == self::makePassword($password)) {
+            'id' => $id,
+        ]) == $this->makePassword($password)) {
             return true;
         }
         return false;
     }
 
-    public static function makePassword(string $password): string
+    public function makePassword(string $password): string
     {
         return md5($password . ' love psrphp forever!');
     }

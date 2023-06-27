@@ -14,8 +14,7 @@ use ReflectionClass;
 class Delete extends Common
 {
     public function post(
-        Request $request,
-        Dir $dir
+        Request $request
     ) {
         $name = $request->post('name');
         if (InstalledVersions::isInstalled($name)) {
@@ -30,8 +29,8 @@ class Delete extends Common
         if (!file_exists($disabled_lock)) {
             return Response::error('请先停用！');
         }
-        $dir->del($root . '/' . $name);
-        $dir->del($root . '/config/' . $name);
+        Dir::del($root . '/' . $name);
+        Dir::del($root . '/config/' . $name);
         return Response::success('操作成功！');
     }
 }

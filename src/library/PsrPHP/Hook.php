@@ -80,15 +80,15 @@ class Hook
                     $params[1] = 'tpl_extend_cache_' . md5($matchs[2]);
                 }
                 return '<?php echo call_user_func(function($args){
-                            extract($args);
-                            if (!$cache->has(\'' . $params[1] . '\')) {
-                                $res = $template->renderFromString(base64_decode(\'' . base64_encode($matchs[2]) . '\'), $args, \'__' . $params[1] . '\');
-                                $cache->set(\'' . $params[1] . '\', $res, ' . $params[0] . ');
-                            }else{
-                                $res = $cache->get(\'' . $params[1] . '\');
-                            }
-                            return $res;
-                        }, get_defined_vars());?>';
+    extract($args);
+    if (!$cache->has(\'' . $params[1] . '\')) {
+        $res = $template->renderFromString(base64_decode(\'' . base64_encode($matchs[2]) . '\'), $args, \'__' . $params[1] . '\');
+        $cache->set(\'' . $params[1] . '\', $res, ' . $params[0] . ');
+    }else{
+        $res = $cache->get(\'' . $params[1] . '\');
+    }
+    return $res;
+}, get_defined_vars());?>';
             });
         });
     }
