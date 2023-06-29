@@ -32,7 +32,11 @@ class AuthMiddleware implements MiddlewareInterface
         ) use ($request, $handler): ResponseInterface {
             if (!in_array($route->getHandler(), [Captcha::class, Login::class])) {
                 if (!$auth->isLogin()) {
-                    return Response::error('请登录', $router->build('/psrphp/admin/auth/login'));
+                    if (isset($_SERVER['HTTP_ACCEPT']) && strpos($_SERVER['HTTP_ACCEPT'], 'application/json') !== false) {
+                        return Response::error('请登录', $router->build('/psrphp/admin/auth/login'));
+                    } else {
+                        return Response::redirect($router->build('/psrphp/admin/auth/login'));
+                    }
                 }
                 if (!$account->checkAuth($auth->getId(), $route->getHandler())) {
                     return Response::error('无权限');

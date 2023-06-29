@@ -10,6 +10,7 @@ use App\Psrphp\Admin\Model\Auth;
 use App\Psrphp\Admin\Model\Log;
 use Psr\Http\Message\ResponseInterface;
 use PsrPHP\Request\Request;
+use PsrPHP\Router\Router;
 use PsrPHP\Session\Session;
 use PsrPHP\Template\Template;
 use Throwable;
@@ -27,8 +28,9 @@ class Login extends Common
     }
 
     public function post(
-        Request $request,
         Auth $auth,
+        Router $router,
+        Request $request,
         Session $session
     ): ResponseInterface {
         $captcha = $_POST['captcha'];
@@ -40,7 +42,7 @@ class Login extends Common
 
         try {
             $auth->login($request->post('name'), $request->post('password'));
-            return Response::success('登录成功');
+            return Response::success('登录成功', null, $router->build('/psrphp/admin/index'));
         } catch (Throwable $th) {
             return Response::error($th->getMessage());
         }

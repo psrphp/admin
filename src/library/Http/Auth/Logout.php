@@ -8,6 +8,7 @@ use App\Psrphp\Admin\Http\Common;
 use App\Psrphp\Admin\Lib\Response;
 use App\Psrphp\Admin\Model\Auth;
 use Psr\Http\Message\ResponseInterface;
+use PsrPHP\Router\Router;
 use Throwable;
 
 /**
@@ -16,11 +17,12 @@ use Throwable;
 class Logout extends Common
 {
     public function get(
-        Auth $auth
+        Auth $auth,
+        Router $router
     ): ResponseInterface {
         try {
             $auth->logout();
-            return Response::success('已退出');
+            return Response::redirect($router->build('/psrphp/admin/index'));
         } catch (Throwable $th) {
             return Response::error($th->getMessage());
         }

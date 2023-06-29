@@ -26,7 +26,7 @@
                         if (response.errcode) {
                             $("#captcha").trigger('click');
                         } else {
-                            location.href = "{echo $router->build('/psrphp/admin/index')}";
+                            location.href = response.redirect_url;
                         }
                     }
                 });
