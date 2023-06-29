@@ -39,7 +39,7 @@
     </style>
     <div class="top bg-dark bg-gradient shadow position-sticky d-flex align-items-center px-3 text-white">
         <a href="{echo $router->build('/psrphp/admin/index')}" class="d-flex align-items-center text-decoration-none link-light">
-            <span class="fs-4 fw-semibold">{$config->get('copyright.name@psrphp.admin', '后台管理系统')}<sup class="text-muted"><small>{:Composer\InstalledVersions::getRootPackage()['pretty_version']}</small></sup></span>
+            <span class="fs-4 fw-semibold">{$config->get('copyright.name@psrphp.admin', '后台管理系统')}</span>
         </a>
     </div>
     <div class="left bg-light p-2">

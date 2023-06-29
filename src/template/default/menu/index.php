@@ -43,7 +43,7 @@
     {/if}
     {/foreach}
 </div>
-<div class="d-flex flex-wrap align-items-stretch gap-3">
+<div class="d-flex flex-wrap align-items-stretch gap-3 mb-3">
     {foreach $menus as $menu}
     {if $menu['auth'] && !$menu['core'] && !$menu['plugin']}
     <div class="bg-light px-2 py-1 item">
@@ -59,7 +59,7 @@
     {/if}
     {/foreach}
 </div>
-<div class="d-flex flex-wrap align-items-stretch gap-3">
+<div class="d-flex flex-wrap align-items-stretch gap-3 mb-3">
     {foreach $menus as $menu}
     {if $menu['auth'] && $menu['plugin']}
     <div class="bg-light px-2 py-1 item">
