@@ -15,10 +15,10 @@ class Script
         self::execSql($sql);
     }
 
-    public static function onUninstall()
+    public static function onUnInstall()
     {
         $sql = '';
-        $sql .= PHP_EOL . self::getUninstallSql();
+        $sql .= PHP_EOL . self::getUnInstallSql();
         self::execSql($sql);
     }
 
@@ -110,7 +110,7 @@ CREATE TABLE `prefix_psrphp_admin_log` (
 str;
     }
 
-    private static function getUninstallSql(): string
+    private static function getUnInstallSql(): string
     {
         return <<<'str'
 DROP TABLE IF EXISTS `prefix_psrphp_admin_department`;

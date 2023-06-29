@@ -35,7 +35,7 @@ class UnInstall extends Common
         }
 
         $class_name = str_replace(['-', '/'], ['', '\\'], ucwords('\\App\\' . $name . '\\PsrPHP\Script', '/\\-'));
-        $action = 'onUninstall';
+        $action = 'onUnInstall';
         if (method_exists($class_name, $action)) {
             Framework::execute([$class_name, $action]);
         }
