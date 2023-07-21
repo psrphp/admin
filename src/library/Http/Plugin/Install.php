@@ -34,10 +34,12 @@ class Install extends Common
         );
         $loader->register();
 
-        $class_name = str_replace(['-', '/'], ['', '\\'], ucwords('\\App\\' . $name . '\\PsrPHP\\Script', '/\\-'));
-        $action = 'onInstall';
-        if (method_exists($class_name, $action)) {
-            Framework::execute([$class_name, $action]);
+        $cfgfile = getcwd() . '/vendor/' . $name . '/src/config/app.php';
+        if (file_exists($cfgfile)) {
+            $appcfg = self::requireFile($cfgfile);
+            if (isset($appcfg['install']) && is_callable($appcfg['install'])) {
+                Framework::execute($appcfg['install']);
+            }
         }
 
         if (!is_dir(dirname($install_lock))) {
@@ -46,5 +48,20 @@ class Install extends Common
         file_put_contents($install_lock, date(DATE_ATOM));
 
         return Response::success('操作成功！');
+    }
+
+    private static function requireFile(string $file)
+    {
+        static $loader;
+        if (!$loader) {
+            $loader = new class()
+            {
+                public function load(string $file)
+                {
+                    return require $file;
+                }
+            };
+        }
+        return $loader->load($file);
     }
 }

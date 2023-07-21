@@ -34,14 +34,31 @@ class UnInstall extends Common
             return Response::error('请先停用！');
         }
 
-        $class_name = str_replace(['-', '/'], ['', '\\'], ucwords('\\App\\' . $name . '\\PsrPHP\Script', '/\\-'));
-        $action = 'onUnInstall';
-        if (method_exists($class_name, $action)) {
-            Framework::execute([$class_name, $action]);
+        $cfgfile = getcwd() . '/vendor/' . $name . '/src/config/app.php';
+        if (file_exists($cfgfile)) {
+            $appcfg = self::requireFile($cfgfile);
+            if (isset($appcfg['unInstall']) && is_callable($appcfg['unInstall'])) {
+                Framework::execute($appcfg['unInstall']);
+            }
         }
 
         unlink($install_lock);
 
         return Response::success('操作成功！');
+    }
+
+    private static function requireFile(string $file)
+    {
+        static $loader;
+        if (!$loader) {
+            $loader = new class()
+            {
+                public function load(string $file)
+                {
+                    return require $file;
+                }
+            };
+        }
+        return $loader->load($file);
     }
 }

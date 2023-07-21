@@ -11,7 +11,6 @@ use App\Psrphp\Admin\Http\Widget\Index as WidgetIndex;
 
 return [
     'menus' => [[
-
         'node' => DepartmentIndex::class,
         'title' => '组织结构',
     ], [

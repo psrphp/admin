@@ -8,8 +8,8 @@ use App\Psrphp\Admin\Http\Common;
 use App\Psrphp\Admin\Model\Account;
 use App\Psrphp\Admin\Model\Auth;
 use Composer\InstalledVersions;
+use PsrPHP\Framework\App;
 use PsrPHP\Framework\Config;
-use PsrPHP\Framework\Framework;
 use PsrPHP\Router\Router;
 use PsrPHP\Template\Template;
 
@@ -19,15 +19,16 @@ use PsrPHP\Template\Template;
 class Index extends Common
 {
     public function get(
-        Template $template,
+        App $app,
         Auth $auth,
-        Account $account,
+        Router $router,
         Config $config,
-        Router $router
+        Account $account,
+        Template $template
     ) {
 
         $menus = [];
-        foreach (Framework::getAppList() as $app) {
+        foreach ($app->all() as $app) {
             foreach ($config->get('admin.menus@' . $app['name'], []) as $value) {
                 $value['url'] = $router->build($this->buildPathFromNode($value['node'] ?? ''), $value['query'] ?? []);
                 $value['auth'] = $account->checkAuth($auth->getId(), $value['node'] ?? '');

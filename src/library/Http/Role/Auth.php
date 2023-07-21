@@ -13,7 +13,7 @@ use PsrPHP\Form\Component\Html;
 use PsrPHP\Form\Component\Row;
 use PsrPHP\Form\Field\Hidden;
 use PsrPHP\Form\Field\Input;
-use PsrPHP\Framework\Framework;
+use PsrPHP\Framework\App;
 use PsrPHP\Request\Request;
 use PsrPHP\Template\Template;
 use ReflectionClass;
@@ -24,9 +24,10 @@ use ReflectionClass;
 class Auth extends Common
 {
     public function get(
+        Db $db,
+        App $app,
         Request $request,
-        Template $template,
-        Db $db
+        Template $template
     ) {
         $role = $db->get('psrphp_admin_role', '*', [
             'id' => $request->get('id', 0, ['intval']),
@@ -37,9 +38,9 @@ class Auth extends Common
                 (new Col('col-md-8'))->addItem(
                     (new Hidden('id', $role['id'])),
                     (new Input('职位名称', 'name', $role['name']))->set('disabled', true),
-                    (new Html((function () use ($db, $template, $role): string {
+                    (new Html((function () use ($db, $app, $template, $role): string {
                         $nodes = [];
-                        foreach (Framework::getAppList() as $app) {
+                        foreach ($app->all() as $app) {
                             if ($tmp = $this->getNodesByApp($app)) {
                                 $nodes[$app['name']] = $tmp;
                             }

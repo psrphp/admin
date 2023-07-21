@@ -10,7 +10,7 @@ use App\Psrphp\Admin\Lib\Response;
 use App\Psrphp\Admin\Model\Account;
 use App\Psrphp\Admin\Model\Auth;
 use Composer\InstalledVersions;
-use PsrPHP\Framework\Framework;
+use PsrPHP\Framework\App;
 use PsrPHP\Request\Request;
 use PsrPHP\Template\Template;
 use ReflectionClass;
@@ -21,6 +21,7 @@ use ReflectionClass;
 class Index extends Common
 {
     public function get(
+        App $app,
         Template $template
     ) {
         $widgets = [];
@@ -37,7 +38,7 @@ class Index extends Common
             ];
         }
 
-        foreach (Framework::getAppList() as $app) {
+        foreach ($app->all() as $app) {
             $widgets[$app['name']] = [];
             $dir = $app['dir'] . '/src/widget/';
             $cfg = Json::readFromFile($dir . 'config.json', []);

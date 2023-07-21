@@ -14,8 +14,8 @@ class Log
     {
         Framework::execute(function (
             Db $db,
-            Route $route,
-            Auth $auth
+            Auth $auth,
+            Route $route
         ) use ($tips) {
             $db->insert('psrphp_admin_log', [
                 'account_id' => $auth->isLogin() ? $auth->getId() : 0,

@@ -11,11 +11,11 @@ use App\Psrphp\Admin\Model\Account;
 use App\Psrphp\Admin\Model\Auth;
 use PsrPHP\Router\Router;
 use PsrPHP\Framework\Framework;
-use PsrPHP\Framework\Route;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use PsrPHP\Framework\Route;
 
 class AuthMiddleware implements MiddlewareInterface
 {
