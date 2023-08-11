@@ -5,9 +5,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>{$config->get('copyright.name@psrphp.admin', '后台管理系统')}</title>
-    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.2.3/js/bootstrap.bundle.min.js"></script>
-    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.2.3/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -20,84 +17,71 @@
             margin: 0;
         }
 
+        a {
+            text-decoration: none;
+            color: #2196F3;
+        }
+
         .top {
             height: 50px;
             width: 100%;
+            background: #000;
         }
 
         .left {
             height: calc(100% - 50px);
-            width: 250px;
+            width: 200px;
             float: left;
+            background: #eee;
         }
 
         .main {
             height: calc(100% - 50px);
-            width: calc(100% - 250px);
+            width: calc(100% - 200px);
             float: left;
+            background: #fff;
         }
     </style>
-    <div class="top bg-dark bg-gradient shadow position-sticky d-flex align-items-center px-3 text-white">
-        <a href="{echo $router->build('/psrphp/admin/index')}" class="d-flex align-items-center text-decoration-none link-light">
-            <span class="fs-4 fw-semibold">{$config->get('copyright.name@psrphp.admin', '后台管理系统')}</span>
-        </a>
+    <div class="top" style="display:flex;align-items:center;">
+        <div style="color: #ddd;font-size: 1.5em;margin-left: 10px;">{$config->get('copyright.name@psrphp.admin', '后台管理系统')}</div>
     </div>
-    <div class="left bg-light p-2">
-        <div class="rounded border bg-white p-2 mb-2">
+    <div class="left">
+        <div style="padding: 10px;">
             <div>
-                <span>欢迎您</span>
-                <span>:</span>
+                <span>欢迎您: {$account->getName($auth->getId())}</span>
                 <span>
-                    <a href="{echo $router->build('/psrphp/admin/my/name')}" target="main">{$account->getName($auth->getId())}</a>
+                    <a href="{echo $router->build('/psrphp/admin/auth/logout')}">退出</a>
                 </span>
             </div>
-            <div>
-                <a href="{echo $router->build('/psrphp/admin/my/password')}" class="link-secondary text-decoration-none small" target="main">[修改密码]</a>
-                <a href="{echo $router->build('/psrphp/admin/auth/logout')}" class="link-secondary text-decoration-none small">[退出]</a>
+            <div style="margin-top: 5px;">
+                <a href="{echo $router->build('/psrphp/admin/my/name')}" target="main">[修改账户]</a>
+                <a href="{echo $router->build('/psrphp/admin/my/password')}" target="main">[修改密码]</a>
             </div>
         </div>
-        <ul class="nav flex-column nav-pills" id="menus">
-            <li class="nav-item">
-                <a class="nav-link active" href="{echo $router->build('/psrphp/admin/index?t=home')}" target="main">主页</a>
-            </li>
+        <hr>
+        <div style="display: flex;flex-direction: column;gap:10px;padding: 10px;">
+            <div>
+                <a href="{echo $router->build('/psrphp/admin/index?t=home')}" target="main">主页</a>
+            </div>
             {if $stick_menus}
             {foreach $stick_menus as $menu}
-            <li class="nav-item">
-                <a class="nav-link" href="{echo $menu['url']}" target="main">{$menu.title}</a>
-            </li>
+            <div>
+                <a href="{echo $menu['url']}" target="main">{$menu.title}</a>
+            </div>
             {/foreach}
-            <li class="nav-item">
-                <a class="nav-link" href="{echo $router->build('/psrphp/admin/menu/index')}" target="main">更多...</a>
-            </li>
+            <div>
+                <a href="{echo $router->build('/psrphp/admin/menu/index')}" target="main">更多...</a>
+            </div>
             {else}
-            <li class="nav-item">
-                <a class="nav-link" href="{echo $router->build('/psrphp/admin/menu/index')}" target="main">自定义菜单...</a>
-            </li>
+            <div>
+                <a href="{echo $router->build('/psrphp/admin/menu/index')}" target="main">自定义菜单...</a>
+            </div>
             {/if}
-        </ul>
-        <script>
-            $(function() {
-                $("#menus li a").click(function() {
-                    $(this).parent().siblings().children('a').removeClass('active');
-                    $(this).addClass("active");
-                });
-                $("#menus li:eq(0) a").trigger('click')
-            });
-        </script>
+        </div>
     </div>
-    <div class="main bg-white">
+    <div class="main">
         <iframe src="{echo $router->build('/psrphp/admin/index?t=home')}" name="main" frameborder="0" style="height:100%;width:100%;display: block;"></iframe>
     </div>
-    <script>
-        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
-        var popoverList = popoverTriggerList.map(function(popoverTriggerEl) {
-            return new bootstrap.Popover(popoverTriggerEl)
-        });
-        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-        var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
-            return new bootstrap.Tooltip(tooltipTriggerEl)
-        });
-    </script>
 </body>
 
 </html>
