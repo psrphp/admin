@@ -33,21 +33,13 @@ class Update extends Common
                 (new Col('col-md-8'))->addItem(
                     (new Hidden('id', $department['id'])),
                     (new Select('上级部门', 'pid', $department['pid'], (function () use ($db): array {
-                        $departments = $db->select('psrphp_admin_department', '*');
-                        $build = function ($data, $pid = 0, $level = 0) use (&$build): array {
-                            $res = [];
-                            foreach ($data as $value) {
-                                if ($value['pid'] == $pid) {
-                                    $value['_level'] = $level;
-                                    array_unshift($res, $value, ...$build($data, $value['id'], $level + 1));
-                                }
-                            }
-                            return $res;
-                        };
                         $res = [];
-                        $res[0] = '顶级';
-                        foreach ($build($departments) as $value) {
-                            $res[$value['id']] = str_repeat('ㅤ', $value['_level'] + 1) . '' . $value['name'];
+                        foreach ($db->select('psrphp_admin_department', '*') as $vo) {
+                            $res[] = [
+                                'value' => $vo['id'],
+                                'parent' => $vo['pid'] ?: null,
+                                'title' => $vo['name']
+                            ];
                         }
                         return $res;
                     })())),
@@ -75,6 +67,6 @@ class Update extends Common
             'id' => $role['id'],
         ]);
 
-        return Response::success('操作成功！', 'javascript:history.go(-2)');
+        return Response::success('操作成功！', null, 'javascript:history.go(-2)');
     }
 }

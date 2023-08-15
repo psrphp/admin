@@ -10,7 +10,6 @@ use PsrPHP\Database\Db;
 use PsrPHP\Form\Builder;
 use PsrPHP\Form\Component\Col;
 use PsrPHP\Form\Component\Row;
-use PsrPHP\Form\Field\Hidden;
 use PsrPHP\Form\Field\Input;
 use PsrPHP\Form\Field\Select;
 use PsrPHP\Request\Request;
@@ -21,19 +20,24 @@ use PsrPHP\Request\Request;
 class Create extends Common
 {
     public function get(
-        Request $request
+        Db $db
     ) {
         $form = new Builder('添加职位');
         $form->addItem(
             (new Row())->addCol(
                 (new Col('col-md-9'))->addItem(
-                    (new Hidden('department_id', $request->get('department_id'))),
+                    (new Select('所属部门', 'department_id', null, (function () use ($db): array {
+                        $res = [];
+                        foreach ($db->select('psrphp_admin_department', '*') as $vo) {
+                            $res[] = [
+                                'value' => $vo['id'],
+                                'parent' => $vo['pid'] ?: null,
+                                'title' => $vo['name'],
+                            ];
+                        }
+                        return $res;
+                    })())),
                     (new Input('职位名称', 'name')),
-                    (new Select('类型', 'director', 0, [
-                        '1' => '主管',
-                        '2' => '副主管',
-                        '0' => '普通成员',
-                    ]))
                 ),
                 (new Col('col-md-3'))->addItem()
             )
@@ -48,7 +52,6 @@ class Create extends Common
         $db->insert('psrphp_admin_role', [
             'department_id' => $request->post('department_id'),
             'name' => $request->post('name'),
-            'director' => $request->post('director'),
         ]);
         return Response::success('操作成功！', null, 'javascript:history.go(-2)');
     }

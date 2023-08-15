@@ -7,7 +7,6 @@ namespace App\Psrphp\Admin\Http\Log;
 use App\Psrphp\Admin\Http\Common;
 use App\Psrphp\Admin\Model\Account;
 use PsrPHP\Database\Db;
-use PsrPHP\Pagination\Pagination;
 use PsrPHP\Request\Request;
 use PsrPHP\Template\Template;
 
@@ -17,11 +16,10 @@ use PsrPHP\Template\Template;
 class Index extends Common
 {
     public function get(
-        Template $template,
-        Request $request,
         Db $db,
+        Request $request,
         Account $account,
-        Pagination $pagination
+        Template $template,
     ) {
 
         $data = [];
@@ -34,12 +32,12 @@ class Index extends Common
         $data['total'] = $total;
 
         $page = $request->get('page') ?: 1;
-        $pagenum = $request->get('pagenum') ?: 20;
-        $where['LIMIT'] = [($page - 1) * $pagenum, $pagenum];
+        $size = $request->get('size') ?: 20;
+        $where['LIMIT'] = [($page - 1) * $size, $size];
         $where['ORDER'] = [
             'id' => 'DESC',
         ];
-        $data['pages'] = $pagination->render($page, $total, $pagenum);
+        $data['maxpage'] = ceil($total / $size) ?: 1;
         $data['datas'] = $db->select('psrphp_admin_log', '*', $where);
         $data['account'] = $account;
 

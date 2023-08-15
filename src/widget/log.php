@@ -11,7 +11,7 @@ $logs = $db->select('psrphp_admin_log', '*', [
     ],
 ]);
 ?>
-<table class="table table-bordered table-striped">
+<table>
     <thead>
         <tr>
             <th>IP</th>

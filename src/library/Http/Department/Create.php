@@ -26,22 +26,14 @@ class Create extends Common
         $form->addItem(
             (new Row())->addCol(
                 (new Col('col-md-9'))->addItem(
-                    new Select('上级部门', 'pid', 0, (function () use ($db): array {
-                        $departments = $db->select('psrphp_admin_department', '*');
-                        $build = function ($data, $pid = 0, $level = 0) use (&$build): array {
-                            $res = [];
-                            foreach ($data as $value) {
-                                if ($value['pid'] == $pid) {
-                                    $value['_level'] = $level;
-                                    array_unshift($res, $value, ...$build($data, $value['id'], $level + 1));
-                                }
-                            }
-                            return $res;
-                        };
+                    new Select('上级部门', 'pid', null, (function () use ($db): array {
                         $res = [];
-                        $res[0] = '顶级';
-                        foreach ($build($departments) as $value) {
-                            $res[$value['id']] = str_repeat('ㅤ', $value['_level'] + 1) . '' . $value['name'];
+                        foreach ($db->select('psrphp_admin_department', '*') as $vo) {
+                            $res[] = [
+                                'value' => $vo['id'],
+                                'parent' => $vo['pid'] ?: null,
+                                'title' => $vo['name']
+                            ];
                         }
                         return $res;
                     })()),
@@ -58,7 +50,7 @@ class Create extends Common
         Db $db
     ) {
         $db->insert('psrphp_admin_department', [
-            'pid' => $request->post('pid', 0),
+            'pid' => $request->post('pid'),
             'name' => $request->post('name'),
         ]);
         return Response::success('操作成功！', null, 'javascript:history.go(-2)');

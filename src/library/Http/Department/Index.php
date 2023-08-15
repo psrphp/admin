@@ -18,7 +18,13 @@ class Index extends Common
         Template $template
     ) {
         $data = [];
-        $data['departments'] = $db->select('psrphp_admin_department', '*');
+        $departments = $db->select('psrphp_admin_department', '*');
+        foreach ($departments as &$vo) {
+            $vo['roles'] = $db->select('psrphp_admin_role', '*', [
+                'department_id' => $vo['id'],
+            ]);
+        }
+        $data['departments'] = $departments;
         return $template->renderFromFile('department/index@psrphp/admin', $data);
     }
 }

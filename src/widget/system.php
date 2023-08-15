@@ -20,12 +20,12 @@ $_infos = [[
     'body' => php_uname()
 ]];
 ?>
-<div class="fs-3 fw-light mt-4 mb-3 text-muted">系统信息</div>
-<div class="d-flex flex-wrap align-items-stretch gap-3">
+<div>系统信息</div>
+<div>
     {foreach $_infos?:[] as $vo}
-    <div class="bg-light rounded border p-3 position-relative item">
-        <div class="fs-4 fw-light">{$vo.title}</div>
-        <div class="text-muted fw-light">{echo strip_tags($vo['body'], '<a><span>')}</div>
+    <div>
+        <div>{$vo.title}</div>
+        <div>{echo strip_tags($vo['body'], '<a><span>')}</div>
     </div>
     {/foreach}
 </div>

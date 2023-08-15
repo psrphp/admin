@@ -12,7 +12,6 @@ use PsrPHP\Form\Component\Col;
 use PsrPHP\Form\Component\Row;
 use PsrPHP\Form\Field\Hidden;
 use PsrPHP\Form\Field\Input;
-use PsrPHP\Form\Field\Select;
 use PsrPHP\Request\Request;
 
 /**
@@ -33,11 +32,6 @@ class Update extends Common
                 (new Col('col-md-8'))->addItem(
                     (new Hidden('id', $role['id'])),
                     (new Input('职位名称', 'name', $role['name'])),
-                    (new Select('类型', 'director', $role['director'], [
-                        '1' => '主管',
-                        '2' => '副主管',
-                        '0' => '普通成员',
-                    ]))
                 )
             )
         );
@@ -54,13 +48,12 @@ class Update extends Common
 
         $update = array_intersect_key($request->post(), [
             'name' => '',
-            'director' => '',
         ]);
 
         $db->update('psrphp_admin_role', $update, [
             'id' => $role['id'],
         ]);
 
-        return Response::success('操作成功！', 'javascript:history.go(-2)');
+        return Response::success('操作成功！', null, 'javascript:history.go(-2)');
     }
 }

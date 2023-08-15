@@ -49,24 +49,20 @@ class Auth extends Common
                             'role_id' => $role['id'],
                         ]);
                         $tpl = <<<'str'
-<div class="mt-2">
-    <label class="form-label">权限设置</label>
+<div>
+    <div>权限设置</div>
     <div>
         {foreach $nodes as $appname => $vos}
             <details open>
-            <summary class="fs-6">{$appname}</summary>
-            <div class="ml-3 mt-1">
-                {foreach $vos as $appname => $vo}
-                <div class="custom-control custom-checkbox custom-control-inline">
-                    <input class="custom-control-input" type="checkbox" name="nodes[]" id="field_{:md5('nodes~'. $vo['node'])}" value="{$vo['node']}" {:in_array($vo['node'], $values)?'checked':''}>
-                    {if $vo['doc']}
-                    <label class="custom-control-label" for="field_{:md5('nodes~'. $vo['node'])}" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="<pre class='text-start mb-0'>{$vo.doc}</pre>">{$vo.node}</label>
-                    {else}
-                    <label class="custom-control-label" for="field_{:md5('nodes~'. $vo['node'])}">{$vo.node}</label>
-                    {/if}
-                </div>
-                {/foreach}
+            <summary>{$appname}</summary>
+            {foreach $vos as $appname => $vo}
+            <div>
+                <label>
+                    <input type="checkbox" name="nodes[]" id="field_{:md5('nodes~'. $vo['node'])}" value="{$vo['node']}" {:in_array($vo['node'], $values)?'checked':''}>
+                    <span title="{$vo.doc}">{$vo.node}</span>
+                </label>
             </div>
+            {/foreach}
             </details>
         {/foreach}
     </div>
@@ -105,7 +101,7 @@ str;
             $db->insert('psrphp_admin_auth', $nodes);
         }
 
-        return Response::success('操作成功！', 'javascript:history.go(-2)');
+        return Response::success('操作成功！', null, 'javascript:history.go(-2)');
     }
 
     private function getNodesByApp(array $app): array

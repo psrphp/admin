@@ -67,7 +67,6 @@ class Index extends Common
                 $diy = $account->getData($auth->getId(), 'admin_diy', []);
                 $diy[] = [
                     'widget' => $request->post('widget'),
-                    'size' => $request->post('size'),
                 ];
                 $account->setData($auth->getId(), 'admin_diy', $diy);
                 return Response::success('操作成功！');

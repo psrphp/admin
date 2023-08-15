@@ -49,6 +49,6 @@ class Create extends Common
             'password' => $account->makePassword(trim($request->post('password', '123456'))),
             'state' => 2,
         ]);
-        return Response::success('操作成功！', 'javascript:history.go(-2)');
+        return Response::success('操作成功！', null, 'javascript:history.go(-2)');
     }
 }

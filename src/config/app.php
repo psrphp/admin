@@ -8,7 +8,7 @@ return [
 DROP TABLE IF EXISTS `prefix_psrphp_admin_department`;
 CREATE TABLE `prefix_psrphp_admin_department` (
     `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-    `pid` int(10) unsigned NOT NULL DEFAULT 0 COMMENT '上级部门',
+    `pid` int(10) unsigned COMMENT '上级部门',
     `name` varchar(50) NOT NULL DEFAULT '' COMMENT '部门名称',
     PRIMARY KEY (`id`) USING BTREE
     ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='部门表';
@@ -17,7 +17,6 @@ CREATE TABLE `prefix_psrphp_admin_role` (
     `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
     `department_id` int(10) unsigned NOT NULL DEFAULT 0 COMMENT '所属部门',
     `name` varchar(50) NOT NULL DEFAULT '' COMMENT '职位名称',
-    `director` tinyint(3) NOT NULL DEFAULT '0' COMMENT '负责人 1主要负责人 2次要负责人',
     PRIMARY KEY (`id`) USING BTREE
     ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='职位表';
 DROP TABLE IF EXISTS `prefix_psrphp_admin_account`;

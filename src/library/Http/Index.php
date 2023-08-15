@@ -4,10 +4,14 @@ declare(strict_types=1);
 
 namespace App\Psrphp\Admin\Http;
 
+use App\Psrphp\Admin\Lib\Json;
 use App\Psrphp\Admin\Model\Account;
 use App\Psrphp\Admin\Model\Auth;
+use Composer\Autoload\ClassLoader;
+use PsrPHP\Framework\App;
 use PsrPHP\Request\Request;
 use PsrPHP\Template\Template;
+use ReflectionClass;
 
 /**
  * 后台主页
@@ -15,17 +19,30 @@ use PsrPHP\Template\Template;
 class Index extends Common
 {
     public function get(
-        Template $template,
-        Request $request,
+        App $app,
         Auth $auth,
-        Account $account
+        Account $account,
+        Request $request,
+        Template $template,
     ) {
         switch ($request->get('t')) {
             case 'home':
+                $diys = $account->getData($auth->getId(), 'admin_diy', []);
+                foreach ($diys as &$vo) {
+                    list($name, $pkg) = explode('@', $vo['widget'] . '@');
+                    if ($pkg) {
+                        $cfg = Json::readFromFile($app->get($pkg)['dir'] . 'config.json', []);
+                        $vo['title'] = $cfg[$name]['title'] ?? '';
+                    } else {
+                        $dir = dirname(dirname(dirname((new ReflectionClass(ClassLoader::class))->getFileName()))) . '/widget/';
+                        $cfg = Json::readFromFile($dir . 'config.json', []);
+                        $vo['title'] =  $cfg[$name]['title'] ?? '';
+                    }
+                }
                 return $template->renderFromFile('home@psrphp/admin', [
                     'auth' => $auth,
                     'account' => $account,
-                    'diys' => $account->getData($auth->getId(), 'admin_diy', []),
+                    'diys' => $diys,
                 ]);
                 break;
 

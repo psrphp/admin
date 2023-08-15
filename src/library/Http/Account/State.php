@@ -67,6 +67,6 @@ class State extends Common
             'id' => $account['id'],
         ]);
 
-        return Response::success('操作成功！', 'javascript:history.go(-2)');
+        return Response::success('操作成功！', null, 'javascript:history.go(-2)');
     }
 }
