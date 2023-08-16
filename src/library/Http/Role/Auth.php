@@ -58,7 +58,7 @@ class Auth extends Common
             {foreach $vos as $appname => $vo}
             <div>
                 <label>
-                    <input type="checkbox" name="nodes[]" id="field_{:md5('nodes~'. $vo['node'])}" value="{$vo['node']}" {:in_array($vo['node'], $values)?'checked':''}>
+                    <input type="checkbox" name="nodes[{$vo['node']}]" id="field_{:md5('nodes~'. $vo['node'])}" value="{$vo['node']}" {:in_array($vo['node'], $values)?'checked':''}>
                     <span title="{$vo.doc}">{$vo.node}</span>
                 </label>
             </div>
