@@ -34,7 +34,7 @@ class Install extends Common
         );
         $loader->register();
 
-        $cfgfile = getcwd() . '/vendor/' . $name . '/src/config/app.php';
+        $cfgfile = $root . '/vendor/' . $name . '/src/config/app.php';
         if (file_exists($cfgfile)) {
             $appcfg = self::requireFile($cfgfile);
             if (isset($appcfg['install']) && is_callable($appcfg['install'])) {
