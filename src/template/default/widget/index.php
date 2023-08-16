@@ -16,7 +16,7 @@
         {foreach $list as $key => $vo}
         <tr>
             <td>{$vo.fullname}</td>
-            <td>{$vo['tips']??''}</td>
+            <td>{$vo['title']??''}</td>
             <td>
                 <a href="{echo $router->build('/psrphp/admin/widget/preview', ['name'=>$vo['fullname']])}">预览</a>
                 {if $name=='自定义'}

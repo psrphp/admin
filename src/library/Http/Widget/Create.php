@@ -28,7 +28,7 @@ class Create extends Common
             (new Row())->addCol(
                 (new Col('col-md-9'))->addItem(
                     (new Input('名称', 'name'))->set('help', '英文字母和数字：0-9A-Za-z'),
-                    (new Input('备注', 'tips')),
+                    (new Input('标题', 'title')),
                     (new Code('代码', 'code'))->set('help', '支持模板标签')
                 ),
                 (new Col('col-md-3'))->addItem()
@@ -54,7 +54,7 @@ class Create extends Common
         file_put_contents($file, $request->post('code'));
 
         $cfg = Json::readFromFile($dir . 'config.json', []);
-        $cfg[$name]['tips'] = $request->post('tips', '');
+        $cfg[$name]['title'] = $request->post('title', '');
         file_put_contents($dir . 'config.json', json_encode($cfg, JSON_UNESCAPED_UNICODE));
 
         return Response::success('操作成功！', null, 'javascript:history.go(-2)');

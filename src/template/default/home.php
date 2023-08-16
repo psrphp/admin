@@ -5,7 +5,7 @@
     {foreach $diys as $key => $vo}
     <div>
         <fieldset>
-            <legend>{$vo['title']?:$vo['widget']}</legend>
+            <legend>{$vo['title']??$vo['widget']}</legend>
             {echo $widget->get($vo['widget'])}
         </fieldset>
         {if $request->get('diy')}

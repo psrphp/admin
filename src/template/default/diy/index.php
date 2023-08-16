@@ -21,7 +21,7 @@
             {foreach $list as $vo}
             <div>
                 <fieldset>
-                    <legend>{$vo.title}</legend>
+                    <legend>{$vo['title']??$vo['fullname']}</legend>
                     <div>
                         {echo $widget->get($vo['fullname'])}
                     </div>

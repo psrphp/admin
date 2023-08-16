@@ -28,11 +28,10 @@ class Index extends Common
 
         foreach (glob($dir . '*.php') as $file) {
             $name = substr($file, strlen($dir), -4);
-            $widgets['自定义'][$name] = [
+            $widgets['自定义'][$name] = array_merge($cfg[$name] ?? [], [
                 'name' => $name,
-                'tips' => $cfg[$name]['tips'] ?? '',
                 'fullname' => $name,
-            ];
+            ]);
         }
 
         foreach ($app->all() as $app) {
@@ -41,11 +40,10 @@ class Index extends Common
             $cfg = Json::readFromFile($dir . '/config.json', []);
             foreach (glob($dir . '/*.php') as $file) {
                 $name = substr($file, strlen($dir) + 1, -4);
-                $widgets[$app['name']][$name] = [
+                $widgets[$app['name']][$name] = array_merge($cfg[$name] ?? [], [
                     'name' => $name,
-                    'tips' => $cfg[$name]['tips'] ?? '',
                     'fullname' => $name . '@' . $app['name'],
-                ];
+                ]);
             }
         }
 

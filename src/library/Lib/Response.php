@@ -25,7 +25,7 @@ class Response
                 $res['data'] = $data;
             }
             $response->getBody()->write(json_encode($res, JSON_UNESCAPED_UNICODE));
-            $response->withHeader('Content-Type', 'application/json');
+            $response = $response->withHeader('Content-Type', 'application/json');
         } else {
             $response->getBody()->write((new Template)->renderFromString(self::getTpl(), $res));
         }
@@ -47,7 +47,7 @@ class Response
                 $res['data'] = $data;
             }
             $response->getBody()->write(json_encode($res, JSON_UNESCAPED_UNICODE));
-            $response->withHeader('Content-Type', 'application/json');
+            $response = $response->withHeader('Content-Type', 'application/json');
         } else {
             $response->getBody()->write((new Template)->renderFromString(self::getTpl(), $res));
         }

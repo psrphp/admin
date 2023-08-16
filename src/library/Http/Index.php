@@ -31,13 +31,12 @@ class Index extends Common
                 foreach ($diys as &$vo) {
                     list($name, $pkg) = explode('@', $vo['widget'] . '@');
                     if ($pkg) {
-                        $cfg = Json::readFromFile($app->get($pkg)['dir'] . 'config.json', []);
-                        $vo['title'] = $cfg[$name]['title'] ?? '';
+                        $cfg = Json::readFromFile($app->get($pkg)['dir'] . '/src/widget/config.json', []);
                     } else {
-                        $dir = dirname(dirname(dirname((new ReflectionClass(ClassLoader::class))->getFileName()))) . '/widget/';
-                        $cfg = Json::readFromFile($dir . 'config.json', []);
-                        $vo['title'] =  $cfg[$name]['title'] ?? '';
+                        $dir = dirname(dirname(dirname((new ReflectionClass(ClassLoader::class))->getFileName())));
+                        $cfg = Json::readFromFile($dir  . '/widget/config.json', []);
                     }
+                    $vo = array_merge($cfg[$name] ?? [], $vo);
                 }
                 return $template->renderFromFile('home@psrphp/admin', [
                     'auth' => $auth,
