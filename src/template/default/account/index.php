@@ -52,17 +52,10 @@
 </table>
 
 <div style="display: flex;flex-direction: row;flex-wrap: wrap;">
-    <form>
-        <button type="submit" name="page" value="1">首页</button>
-        <button type="submit" name="page" value="{:max($request->get('page')-1, 1)}">上一页</button>
-    </form>
-    <form style="margin:0 5px;">
-        <input type="number" name="page" min="1" max="{$maxpage}" step="1" style="width:50px" value="{:$request->get('page', 1)}" onchange="event.target.form.submit()">
-    </form>
-    <form>
-        <button type="submit" name="page" value="{:min($request->get('page')+1, $maxpage)}">下一页</button>
-        <button type="submit" name="page" value="{$maxpage}">末页</button>
-    </form>
+    <a href="{echo $router->build('/psrphp/admin/account/index', array_merge($_GET, ['page'=>1]))}">首页</a>
+    <a href="{echo $router->build('/psrphp/admin/account/index', array_merge($_GET, ['page'=>max($request->get('page')-1, 1)]))}">上一页</a>
+    <a href="{echo $router->build('/psrphp/admin/account/index', array_merge($_GET, ['page'=>min($request->get('page')+1, $maxpage)]))}">下一页</a>
+    <a href="{echo $router->build('/psrphp/admin/account/index', array_merge($_GET, ['page'=>$maxpage]))}">末页</a>
 </div>
 
 {include common/footer@psrphp/admin}
