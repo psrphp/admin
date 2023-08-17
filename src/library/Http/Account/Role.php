@@ -11,7 +11,7 @@ use PsrPHP\Request\Request;
 use PsrPHP\Template\Template;
 
 /**
- * 职位设置
+ * 角色设置
  */
 class Role extends Common
 {

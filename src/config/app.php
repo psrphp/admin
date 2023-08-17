@@ -16,9 +16,9 @@ DROP TABLE IF EXISTS `prefix_psrphp_admin_role`;
 CREATE TABLE `prefix_psrphp_admin_role` (
     `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
     `department_id` int(10) unsigned NOT NULL DEFAULT 0 COMMENT '所属部门',
-    `name` varchar(50) NOT NULL DEFAULT '' COMMENT '职位名称',
+    `name` varchar(50) NOT NULL DEFAULT '' COMMENT '角色名称',
     PRIMARY KEY (`id`) USING BTREE
-    ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='职位表';
+    ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='角色表';
 DROP TABLE IF EXISTS `prefix_psrphp_admin_account`;
 CREATE TABLE `prefix_psrphp_admin_account` (
     `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -41,17 +41,17 @@ DROP TABLE IF EXISTS `prefix_psrphp_admin_account_role`;
 CREATE TABLE `prefix_psrphp_admin_account_role` (
     `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
     `account_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '账户id',
-    `role_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '职位id',
+    `role_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '角色id',
     PRIMARY KEY (`id`) USING BTREE,
     KEY `account_id` (`account_id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='账户职位表';
+    ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='账户角色表';
 DROP TABLE IF EXISTS `prefix_psrphp_admin_auth`;
 CREATE TABLE `prefix_psrphp_admin_auth` (
     `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-    `role_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '职位id',
+    `role_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '角色id',
     `node` varchar(255) NOT NULL DEFAULT '' COMMENT '节点',
     PRIMARY KEY (`id`) USING BTREE
-    ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='职位权限表';
+    ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='角色权限表';
 DROP TABLE IF EXISTS `prefix_psrphp_admin_log`;
 CREATE TABLE `prefix_psrphp_admin_log` (
     `id` int(10) unsigned NOT NULL AUTO_INCREMENT,

@@ -15,14 +15,14 @@ use PsrPHP\Form\Field\Select;
 use PsrPHP\Request\Request;
 
 /**
- * 创建职位
+ * 创建角色
  */
 class Create extends Common
 {
     public function get(
         Db $db
     ) {
-        $form = new Builder('添加职位');
+        $form = new Builder('添加角色');
         $form->addItem(
             (new Row())->addCol(
                 (new Col('col-md-9'))->addItem(
@@ -37,7 +37,7 @@ class Create extends Common
                         }
                         return $res;
                     })())),
-                    (new Input('职位名称', 'name')),
+                    (new Input('角色名称', 'name')),
                 ),
                 (new Col('col-md-3'))->addItem()
             )

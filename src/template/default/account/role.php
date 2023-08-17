@@ -1,5 +1,5 @@
 {include common/header@psrphp/admin}
-<h1>职位设置</h1>
+<h1>角色设置</h1>
 
 {function xx($departments, $role_ids, $router, $pid=0)}
 {foreach $departments as $dep}

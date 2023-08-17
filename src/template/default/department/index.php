@@ -2,7 +2,7 @@
 <h1>组织结构管理</h1>
 <div>
     <a href="{:$router->build('/psrphp/admin/department/create')}">创建部门</a>
-    <a href="{:$router->build('/psrphp/admin/role/create')}">创建职位</a>
+    <a href="{:$router->build('/psrphp/admin/role/create')}">创建角色</a>
 </div>
 
 {function xx($departments, $router, $pid=0)}

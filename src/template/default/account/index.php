@@ -20,7 +20,7 @@
             <th>#</th>
             <th>账户</th>
             <th>状态</th>
-            <th>职位</th>
+            <th>角色</th>
             <th>操作</th>
         </tr>
     </thead>
@@ -37,7 +37,7 @@
             </td>
             <td>
                 {if $v['id']!=1}
-                <a href="{:$router->build('/psrphp/admin/account/role', ['id'=>$v['id']])}">职位设置</a>
+                <a href="{:$router->build('/psrphp/admin/account/role', ['id'=>$v['id']])}">角色设置</a>
                 <a href="{:$router->build('/psrphp/admin/account/name', ['id'=>$v['id']])}">设置账户名</a>
                 <a href="{:$router->build('/psrphp/admin/account/state', ['id'=>$v['id']])}">设置状态</a>
                 <a href="{:$router->build('/psrphp/admin/account/password', ['id'=>$v['id']])}">重置密码</a>

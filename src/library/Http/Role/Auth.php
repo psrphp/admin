@@ -19,7 +19,7 @@ use PsrPHP\Template\Template;
 use ReflectionClass;
 
 /**
- * 给职位设置权限
+ * 给角色设置权限
  */
 class Auth extends Common
 {
@@ -37,7 +37,7 @@ class Auth extends Common
             (new Row())->addCol(
                 (new Col('col-md-8'))->addItem(
                     (new Hidden('id', $role['id'])),
-                    (new Input('职位名称', 'name', $role['name']))->set('disabled', true),
+                    (new Input('角色名称', 'name', $role['name']))->set('disabled', true),
                     (new Html((function () use ($db, $app, $template, $role): string {
                         $nodes = [];
                         foreach ($app->all() as $app) {

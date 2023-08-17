@@ -10,7 +10,7 @@ use PsrPHP\Database\Db;
 use PsrPHP\Request\Request;
 
 /**
- * 删除职位
+ * 删除角色
  */
 class Delete extends Common
 {

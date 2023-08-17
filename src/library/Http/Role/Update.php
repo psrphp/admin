@@ -15,7 +15,7 @@ use PsrPHP\Form\Field\Input;
 use PsrPHP\Request\Request;
 
 /**
- * 编辑职位信息
+ * 编辑角色信息
  */
 class Update extends Common
 {
@@ -26,12 +26,12 @@ class Update extends Common
         $role = $db->get('psrphp_admin_role', '*', [
             'id' => $request->get('id', 0, ['intval']),
         ]);
-        $form = new Builder('编辑职位');
+        $form = new Builder('编辑角色');
         $form->addItem(
             (new Row())->addCol(
                 (new Col('col-md-8'))->addItem(
                     (new Hidden('id', $role['id'])),
-                    (new Input('职位名称', 'name', $role['name'])),
+                    (new Input('角色名称', 'name', $role['name'])),
                 )
             )
         );
