@@ -44,7 +44,7 @@ return [
                     'container' => $container,
                 ]);
 
-                $template->extend('/\{widget\s*([\w\-_\.,@\/]*)\}/Ui', function ($matchs) {
+                $template->extend('/\{widget\s*([a-zA-Z0-9_\-@\/\.]+)\}/Ui', function ($matchs) {
                     return '<?php echo $widget->get(\'' . $matchs[1] . '\') ?>';
                 });
                 $template->extend('/\{cache\s*(.*)\s*\}([\s\S]*)\{\/cache\}/Ui', function ($matchs) {

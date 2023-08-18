@@ -2,7 +2,7 @@
 
 <h1>挂件管理</h1>
 
-<div>管理系统挂件，在模板中的调用方式为：<code>{literal}{widget '挂件名称'}{/literal}</code></div>
+<div>管理系统挂件，在模板中的调用方式为：<code>{literal}{widget 挂件名称}{/literal}</code></div>
 
 <div>
     <a href="{:$router->build('/psrphp/admin/widget/create')}">添加挂件</a>
