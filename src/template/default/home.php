@@ -1,5 +1,8 @@
 {include common/header@psrphp/admin}
 <h1>信息看板</h1>
+<div>
+    <a href="{echo $router->build('/psrphp/admin/diy/index')}">自定义本页</a>
+</div>
 {if $diys}
 <div style="display: flex;flex-direction: row;gap: 10px;flex-wrap: wrap;margin-top: 20px;">
     {foreach $diys as $key => $vo}
@@ -34,8 +37,6 @@
     </div>
     {/foreach}
 </div>
-{else}
-<a href="{echo $router->build('/psrphp/admin/diy/index')}">自定义本页</a>
 {/if}
 
 {include common/footer@psrphp/admin}
