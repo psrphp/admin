@@ -1,34 +1,42 @@
 {include common/header@psrphp/admin}
-
-<h1>挂件管理</h1>
-
-<div>管理系统挂件，在模板中的调用方式为：<code>{literal}{widget 挂件名称}{/literal}</code></div>
-
+<h1>信息看板</h1>
 <div>
-    <a href="{:$router->build('/psrphp/admin/widget/create')}">添加挂件</a>
+    {if $request->has('get.diy')}
+    <a href="{echo $router->build('/psrphp/admin/widget/index')}" target="main">退出编辑</a>
+    {else}
+    <a href="{echo $router->build('/psrphp/admin/widget/diy')}">自定义本页</a>
+    {/if}
 </div>
-
-{foreach $widgets as $name => $list}
-{if $list}
-<fieldset>
-    <legend>{$name}</legend>
-    <table>
-        {foreach $list as $key => $vo}
-        <tr>
-            <td>{$vo.fullname}</td>
-            <td>{$vo['title']??''}</td>
-            <td>
-                <a href="{echo $router->build('/psrphp/admin/widget/preview', ['name'=>$vo['fullname']])}">预览</a>
-                {if $name=='自定义'}
-                <a href="{echo $router->build('/psrphp/admin/widget/update', ['name'=>$vo['name']])}">编辑</a>
-                <a href="{echo $router->build('/psrphp/admin/widget/delete', ['name'=>$vo['name']])}">删除</a>
-                {/if}
-            </td>
-        </tr>
-        {/foreach}
-    </table>
-</fieldset>
-{/if}
-{/foreach}
-
+<div style="display: flex;flex-direction: row;gap: 10px;flex-wrap: wrap;margin-top: 20px;">
+    {foreach $widgets as $key => $widget}
+    <div>
+        <fieldset>
+            <legend>
+                <div style="display: flex;gap: 5px;align-items: center;justify-content: center;">
+                    <span>{$widget->getTitle()}</span>
+                    {if $request->get('diy')}
+                    {if $key}
+                    <form action="{echo $router->build('/psrphp/admin/widget/left')}" method="POST">
+                        <input type="hidden" name="index" value="{$key}">
+                        <button type="submit">左移</button>
+                    </form>
+                    {/if}
+                    {if count($widgets)-$key-1}
+                    <form action="{echo $router->build('/psrphp/admin/widget/right')}" method="POST">
+                        <input type="hidden" name="index" value="{$key}">
+                        <button type="submit">右移</button>
+                    </form>
+                    {/if}
+                    <form action="{echo $router->build('/psrphp/admin/widget/delete')}" method="POST">
+                        <input type="hidden" name="index" value="{$key}">
+                        <button type="submit">移除</button>
+                    </form>
+                    {/if}
+                </div>
+            </legend>
+            {echo $widget->getContent()}
+        </fieldset>
+    </div>
+    {/foreach}
+</div>
 {include common/footer@psrphp/admin}

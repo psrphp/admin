@@ -22,6 +22,7 @@
             <a href="{:$router->build('/psrphp/admin/role/update', ['id'=>$role['id']])}">编辑</a>
             <a href="{:$router->build('/psrphp/admin/role/delete', ['id'=>$role['id']])}" onclick="return confirm('确定删除吗？删除后不可恢复！');">删除</a>
             <a href="{:$router->build('/psrphp/admin/role/auth', ['id'=>$role['id']])}">权限设置</a>
+            <a href="{:$router->build('/psrphp/admin/role/account', ['id'=>$role['id']])}">成员({:count($role['accounts'])})</a>
         </div>
         {/foreach}
         {:xx($departments, $router, $dep['id'])}
@@ -30,5 +31,9 @@
 {/if}
 {/foreach}
 {/function}
-{:xx($departments, $router)}
+
+<div style="margin-top: 10px;">
+    {:xx($departments, $router)}
+</div>
+
 {include common/footer@psrphp/admin}

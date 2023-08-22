@@ -6,7 +6,6 @@ use App\Psrphp\Admin\Http\Department\Index as DepartmentIndex;
 use App\Psrphp\Admin\Http\Log\Index as LogIndex;
 use App\Psrphp\Admin\Http\Plugin\Index as PluginIndex;
 use App\Psrphp\Admin\Http\Theme\Index as ThemeIndex;
-use App\Psrphp\Admin\Http\Widget\Index as WidgetIndex;
 
 return [
     'menus' => [[
@@ -21,9 +20,6 @@ return [
     ], [
         'node' => ThemeIndex::class,
         'title' => '主题管理',
-    ], [
-        'node' => WidgetIndex::class,
-        'title' => '挂件管理',
     ], [
         'node' => LogIndex::class,
         'title' => '日志管理',

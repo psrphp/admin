@@ -2,6 +2,9 @@
 
 use App\Psrphp\Admin\Http\Common;
 use App\Psrphp\Admin\Lib\Lazy;
+use App\Psrphp\Admin\Model\WidgetProvider;
+use App\Psrphp\Admin\Widget\Log;
+use App\Psrphp\Admin\Widget\System;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -15,7 +18,6 @@ use PsrPHP\Framework\Config;
 use PsrPHP\Framework\Framework;
 use PsrPHP\Framework\Handler;
 use PsrPHP\Framework\Route;
-use PsrPHP\Framework\Widget;
 use PsrPHP\Psr11\Container;
 use PsrPHP\Request\Request;
 use PsrPHP\Router\Router;
@@ -38,15 +40,10 @@ return [
                     'logger' => new Lazy($container, LoggerInterface::class),
                     'router' => new Lazy($container, Router::class),
                     'config' => new Lazy($container, Config::class),
-                    'widget' => new Lazy($container, Widget::class),
                     'request' => new Lazy($container, Request::class),
                     'template' => $template,
                     'container' => $container,
                 ]);
-
-                $template->extend('/\{widget\s*([a-zA-Z0-9_\-@\/\.]+)\}/Ui', function ($matchs) {
-                    return '<?php echo $widget->get(\'' . $matchs[1] . '\') ?>';
-                });
                 $template->extend('/\{cache\s*(.*)\s*\}([\s\S]*)\{\/cache\}/Ui', function ($matchs) {
                     $params = array_filter(explode(',', trim($matchs[1])));
                     if (!isset($params[0])) {
@@ -95,6 +92,16 @@ return [
                     });
                 }
             });
+        }
+    ],
+    WidgetProvider::class => [
+        function (
+            WidgetProvider $widgetProvider,
+            System $system,
+            Log $log,
+        ) {
+            $widgetProvider->add($system);
+            $widgetProvider->add($log);
         }
     ],
 ];

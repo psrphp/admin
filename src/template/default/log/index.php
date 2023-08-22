@@ -8,7 +8,7 @@
     </form>
 </div>
 
-<table>
+<table style="margin-top: 20px;">
     <thead>
         <tr>
             <th>#</th>
@@ -45,7 +45,7 @@
     </tbody>
 </table>
 
-<div style="display: flex;flex-direction: row;flex-wrap: wrap;">
+<div style="display: flex;flex-direction: row;flex-wrap: wrap;margin-top: 10px;">
     <a href="{echo $router->build('/psrphp/admin/log/index', array_merge($_GET, ['page'=>1]))}">首页</a>
     <a href="{echo $router->build('/psrphp/admin/log/index', array_merge($_GET, ['page'=>max($request->get('page')-1, 1)]))}">上一页</a>
     <a href="{echo $router->build('/psrphp/admin/log/index', array_merge($_GET, ['page'=>min($request->get('page')+1, $maxpage)]))}">下一页</a>

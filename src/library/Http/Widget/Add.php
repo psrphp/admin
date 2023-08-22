@@ -11,18 +11,17 @@ use App\Psrphp\Admin\Model\Auth;
 use PsrPHP\Request\Request;
 use PsrPHP\Router\Router;
 
-class Delete extends Common
+class Add extends Common
 {
     public function post(
         Auth $auth,
         Router $router,
-        Request $request,
         Account $account,
+        Request $request,
     ) {
         $widgets = $account->getData($auth->getId(), 'widgets', []);
-        $index = $request->post('index');
-        unset($widgets[$index]);
-        $account->setData($auth->getId(), 'widgets', array_values($widgets));
+        $widgets[] = $request->post('name');
+        $account->setData($auth->getId(), 'widgets', $widgets);
         return Response::redirect($router->build('/psrphp/admin/widget/index', ['diy' => 1]));
     }
 }

@@ -4,17 +4,19 @@
     <a href="{:$router->build('/psrphp/admin/account/create')}">创建账户</a>
 </div>
 
-<form action="{:$router->build('/psrphp/admin/account/index')}" method="GET">
-    <input type="hidden" name="page" value="1">
-    <select name="state" onchange="this.form.submit();">
-        <option {if $request->get('state')=='' }selected{/if} value="">不限</option>
-        <option {if $request->get('state')=='1' }selected{/if} value="1">允许登陆</option>
-        <option {if $request->get('state')=='2' }selected{/if} value="2">禁止登陆</option>
-    </select>
-    <input type="search" name="q" value="{:$request->get('q')}" placeholder="搜索.." onchange="this.form.submit();">
-</form>
+<div style="margin-top: 15px;">
+    <form action="{:$router->build('/psrphp/admin/account/index')}" method="GET">
+        <input type="hidden" name="page" value="1">
+        <select name="state" onchange="this.form.submit();">
+            <option {if $request->get('state')=='' }selected{/if} value="">不限</option>
+            <option {if $request->get('state')=='1' }selected{/if} value="1">允许登陆</option>
+            <option {if $request->get('state')=='2' }selected{/if} value="2">禁止登陆</option>
+        </select>
+        <input type="search" name="q" value="{:$request->get('q')}" placeholder="搜索.." onchange="this.form.submit();">
+    </form>
+</div>
 
-<table>
+<table style="margin-top: 10px;">
     <thead>
         <tr>
             <th>#</th>
@@ -51,7 +53,7 @@
     </tbody>
 </table>
 
-<div style="display: flex;flex-direction: row;flex-wrap: wrap;">
+<div style="display: flex;flex-direction: row;flex-wrap: wrap;margin-top: 10px;">
     <a href="{echo $router->build('/psrphp/admin/account/index', array_merge($_GET, ['page'=>1]))}">首页</a>
     <a href="{echo $router->build('/psrphp/admin/account/index', array_merge($_GET, ['page'=>max($request->get('page')-1, 1)]))}">上一页</a>
     <a href="{echo $router->build('/psrphp/admin/account/index', array_merge($_GET, ['page'=>min($request->get('page')+1, $maxpage)]))}">下一页</a>

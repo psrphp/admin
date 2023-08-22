@@ -8,11 +8,6 @@
         margin: 0;
     }
 
-    a {
-        text-decoration: none;
-        color: #2196F3;
-    }
-
     .top {
         height: 50px;
         width: 100%;
@@ -54,7 +49,7 @@
     <hr>
     <div style="display: flex;flex-direction: column;gap:10px;padding: 10px;">
         <div>
-            <a href="{echo $router->build('/psrphp/admin/index?t=home')}" target="main">主页</a>
+            <a href="{echo $router->build('/psrphp/admin/widget/index')}" target="main">主页</a>
         </div>
         {if $stick_menus}
         {foreach $stick_menus as $menu}
@@ -73,6 +68,6 @@
     </div>
 </div>
 <div class="main">
-    <iframe src="{echo $router->build('/psrphp/admin/index?t=home')}" name="main" frameborder="0" style="height:100%;width:100%;display: block;"></iframe>
+    <iframe src="{echo $router->build('/psrphp/admin/widget/index')}" name="main" frameborder="0" style="height:100%;width:100%;display: block;"></iframe>
 </div>
 {include common/footer@psrphp/admin}
