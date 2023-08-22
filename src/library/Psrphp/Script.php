@@ -1,9 +1,15 @@
 <?php
 
-use PsrPHP\Framework\Script;
+declare(strict_types=1);
 
-return [
-    'install' => function () {
+namespace App\Psrphp\Admin\Psrphp;
+
+use PsrPHP\Framework\Script as FrameworkScript;
+
+class Script
+{
+    public static function onInstall()
+    {
         $sql = <<<'str'
 DROP TABLE IF EXISTS `prefix_psrphp_admin_department`;
 CREATE TABLE `prefix_psrphp_admin_department` (
@@ -66,9 +72,11 @@ CREATE TABLE `prefix_psrphp_admin_log` (
     KEY `node` (`node`)
     ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='日志表';
 str;
-        Script::execSql($sql);
-    },
-    'unInstall' => function () {
+        FrameworkScript::execSql($sql);
+    }
+
+    public static function onUnInstall()
+    {
         $sql = <<<'str'
 DROP TABLE IF EXISTS `prefix_psrphp_admin_department`;
 DROP TABLE IF EXISTS `prefix_psrphp_admin_role`;
@@ -78,8 +86,6 @@ DROP TABLE IF EXISTS `prefix_psrphp_admin_info`;
 DROP TABLE IF EXISTS `prefix_psrphp_admin_auth`;
 DROP TABLE IF EXISTS `prefix_psrphp_admin_log`;
 str;
-        Script::execSql($sql);
-    },
-    'update' => function () {
-    },
-];
+        FrameworkScript::execSql($sql);
+    }
+}

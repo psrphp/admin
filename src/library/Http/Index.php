@@ -21,7 +21,7 @@ class Index extends Common
         return $template->renderFromFile('index@psrphp/admin', [
             'auth' => $auth,
             'account' => $account,
-            'stick_menus' => $account->getData($auth->getId(), 'psrphp_admin_menu', []),
+            'sticks' => $account->getData($auth->getId(), 'psrphp_admin_menu', []),
         ]);
     }
 }

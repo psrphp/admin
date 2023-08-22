@@ -51,20 +51,18 @@
         <div>
             <a href="{echo $router->build('/psrphp/admin/widget/index')}" target="main">主页</a>
         </div>
-        {if $stick_menus}
-        {foreach $stick_menus as $menu}
+        {foreach $sticks as $vo}
         <div>
-            <a href="{echo $menu['url']}" target="main">{$menu.title}</a>
+            <a href="{echo $vo['url']}" target="main">{$vo.title}</a>
         </div>
         {/foreach}
         <div>
+            {if $sticks}
             <a href="{echo $router->build('/psrphp/admin/menu/index')}" target="main">更多...</a>
-        </div>
-        {else}
-        <div>
+            {else}
             <a href="{echo $router->build('/psrphp/admin/menu/index')}" target="main">自定义菜单...</a>
+            {/if}
         </div>
-        {/if}
     </div>
 </div>
 <div class="main">

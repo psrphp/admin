@@ -7,9 +7,7 @@ namespace App\Psrphp\Admin\Http\Menu;
 use App\Psrphp\Admin\Http\Common;
 use App\Psrphp\Admin\Model\Account;
 use App\Psrphp\Admin\Model\Auth;
-use Composer\InstalledVersions;
-use PsrPHP\Framework\App;
-use PsrPHP\Framework\Config;
+use App\Psrphp\Admin\Model\MenuProvider;
 use PsrPHP\Router\Router;
 use PsrPHP\Template\Template;
 
@@ -19,27 +17,22 @@ use PsrPHP\Template\Template;
 class Index extends Common
 {
     public function get(
-        App $app,
         Auth $auth,
         Router $router,
-        Config $config,
         Account $account,
-        Template $template
+        Template $template,
+        MenuProvider $menuProvider
     ) {
 
         $menus = [];
-        foreach ($app->all() as $app) {
-            foreach ($config->get('admin.menus@' . $app['name'], []) as $value) {
-                $value['url'] = $router->build($this->buildPathFromNode($value['node'] ?? ''), $value['query'] ?? []);
-                $value['auth'] = $account->checkAuth($auth->getId(), $value['node'] ?? '');
-                $value['plugin'] = !InstalledVersions::isInstalled($app['name']);
-                $value['core'] = $value['plugin'] ? false : (substr($app['name'], 0, 7) == 'psrphp/');
-                $menus[] = $value;
-            }
+        foreach ($menuProvider->all() as $vo) {
+            $vo['url'] = $router->build($this->buildPathFromNode($vo['node'] ?? ''), $vo['query'] ?? []);
+            $vo['auth'] = $account->checkAuth($auth->getId(), $vo['node'] ?? '');
+            $menus[$this->getAppName($vo['node'])][] = $vo;
         }
 
         return $template->renderFromFile('menu/index@psrphp/admin', [
-            'stick_menus' => $account->getData($auth->getId(), 'psrphp_admin_menu', []),
+            'sticks' => $account->getData($auth->getId(), 'psrphp_admin_menu', []),
             'menus' => $menus,
         ]);
     }
@@ -53,5 +46,14 @@ class Index extends Common
         unset($paths[0]);
         unset($paths[3]);
         return '/' . implode('/', $paths);
+    }
+
+    private function getAppName(string $node): string
+    {
+        $paths = [];
+        foreach (explode('\\', $node) as $vo) {
+            $paths[] = preg_replace('/([A-Z])/', "-$1", lcfirst($vo));
+        }
+        return $paths[1] . '/' . $paths[2];
     }
 }
