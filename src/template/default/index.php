@@ -8,7 +8,7 @@
         margin: 0;
     }
 
-    .top {
+    #top {
         height: 50px;
         width: 100%;
         background: #000;
@@ -16,24 +16,33 @@
         align-items: center;
     }
 
-    .left {
+    #left {
         height: calc(100% - 50px);
-        width: 200px;
         float: left;
         background: #eee;
     }
 
-    .main {
+    #right {
         height: calc(100% - 50px);
-        width: calc(100% - 200px);
         float: left;
         background: #fff;
     }
 </style>
-<div class="top">
-    <div style="color: #ddd;font-size: 1.5em;margin-left: 10px;">{$config->get('copyright.name@psrphp.admin', '后台管理系统')}</div>
+<script>
+    function togglemenu() {
+        if (document.getElementById("left").style.width == "200px") {
+            document.getElementById("left").style.width = '0px';
+            document.getElementById("right").style.width = '100%';
+        } else {
+            document.getElementById("left").style.width = '200px';
+            document.getElementById("right").style.width = 'calc(100% - 200px)';
+        }
+    }
+</script>
+<div id="top">
+    <div style="color: #ddd;font-size: 1.5em;margin-left: 10px;" onclick="togglemenu()"><span style="margin-right:5px">≡</span>{$config->get('copyright.name@psrphp.admin', '后台管理系统')}</div>
 </div>
-<div class="left">
+<div id="left" style="width: 200px;">
     <div style="padding: 10px;">
         <div>
             <span>欢迎您: {$account->getName($auth->getId())}</span>
@@ -57,15 +66,11 @@
         </div>
         {/foreach}
         <div>
-            {if $sticks}
             <a href="{echo $router->build('/psrphp/admin/menu/index')}" target="main">更多...</a>
-            {else}
-            <a href="{echo $router->build('/psrphp/admin/menu/index')}" target="main">自定义菜单...</a>
-            {/if}
         </div>
     </div>
 </div>
-<div class="main">
+<div id="right" style="width: calc(100% - 200px);">
     <iframe src="{echo $router->build('/psrphp/admin/widget/index')}" name="main" frameborder="0" style="height:100%;width:100%;display: block;"></iframe>
 </div>
 {include common/footer@psrphp/admin}
