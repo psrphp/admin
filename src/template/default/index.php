@@ -8,41 +8,42 @@
         margin: 0;
     }
 
-    #top {
+    .top {
+        position: absolute;
+        top: 0;
+        left: 0;
         height: 50px;
         width: 100%;
+        overflow: auto;
         background: #000;
         display: flex;
         align-items: center;
     }
 
-    #left {
-        height: calc(100% - 50px);
-        float: left;
+    .left {
+        position: absolute;
+        left: 0;
+        top: 50px;
+        bottom: 0;
+        width: 200px;
+        overflow: auto;
         background: #eee;
     }
 
-    #right {
-        height: calc(100% - 50px);
-        float: left;
+    .right {
+        position: absolute;
+        right: 0;
+        top: 50px;
+        bottom: 0;
+        z-index: 100;
+        overflow: auto;
         background: #fff;
     }
 </style>
-<script>
-    function togglemenu() {
-        if (document.getElementById("left").style.width == "200px") {
-            document.getElementById("left").style.width = '0px';
-            document.getElementById("right").style.width = '100%';
-        } else {
-            document.getElementById("left").style.width = '200px';
-            document.getElementById("right").style.width = 'calc(100% - 200px)';
-        }
-    }
-</script>
-<div id="top">
-    <div style="color: #ddd;font-size: 1.5em;margin-left: 10px;" onclick="togglemenu()"><span style="margin-right:5px">≡</span>{$config->get('copyright.name@psrphp.admin', '后台管理系统')}</div>
+<div class="top">
+    <div style="color: #ddd;font-size: 1.5em;margin-left: 10px;" onclick="event.target.parentNode.nextElementSibling.nextElementSibling.style.left=event.target.parentNode.nextElementSibling.nextElementSibling.style.left=='200px'?'0':'200px'"><span style="margin-right:5px">≡</span>{$config->get('copyright.name@psrphp.admin', '后台管理系统')}</div>
 </div>
-<div id="left" style="width: 200px;">
+<div class="left">
     <div style="padding: 10px;">
         <div>
             <span>欢迎您: {$account->getName($auth->getId())}</span>
@@ -70,7 +71,7 @@
         </div>
     </div>
 </div>
-<div id="right" style="width: calc(100% - 200px);">
+<div class="right" style="left: 200px;">
     <iframe src="{echo $router->build('/psrphp/admin/widget/index')}" name="main" frameborder="0" style="height:100%;width:100%;display: block;"></iframe>
 </div>
 {include common/footer@psrphp/admin}

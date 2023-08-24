@@ -13,7 +13,6 @@ use PsrPHP\Request\Request;
 use PsrPHP\Router\Router;
 use PsrPHP\Session\Session;
 use PsrPHP\Template\Template;
-use Throwable;
 
 /**
  * 登录后台，无需权限认证
@@ -40,11 +39,10 @@ class Login extends Common
         }
         $session->delete('admin_captcha');
 
-        try {
-            $auth->login($request->post('name'), $request->post('password'));
+        if ($auth->login($request->post('name'), $request->post('password'))) {
             return Response::success('登录成功', null, $router->build('/psrphp/admin/index'));
-        } catch (Throwable $th) {
-            return Response::error($th->getMessage());
+        } else {
+            return Response::error('账户或密码不正确');
         }
     }
 }
