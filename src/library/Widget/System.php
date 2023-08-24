@@ -26,12 +26,11 @@ class System extends Widget
     public function getContent(): string
     {
         $tpl = <<<'str'
-<div>系统信息</div>
 <div>
     {foreach $infos as $vo}
     <div>
         <div>{$vo.title}</div>
-        <div>{echo strip_tags($vo['body'], '<a><span>')}</div>
+        <div><code>{echo strip_tags($vo['body'], '<a><span>')}</code></div>
     </div>
     {/foreach}
 </div>
