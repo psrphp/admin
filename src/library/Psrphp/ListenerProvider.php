@@ -6,15 +6,12 @@ namespace App\Psrphp\Admin\Psrphp;
 
 use App\Psrphp\Admin\Http\Account\Index as AccountIndex;
 use App\Psrphp\Admin\Http\Cache\Clear;
-use App\Psrphp\Admin\Http\Department\Index as DepartmentIndex;
-use App\Psrphp\Admin\Http\Plugin\Index as PluginIndex;
-use App\Psrphp\Admin\Http\Theme\Index as ThemeIndex;
 use App\Psrphp\Admin\Http\Common;
+use App\Psrphp\Admin\Http\Department\Index as DepartmentIndex;
 use App\Psrphp\Admin\Middleware\AuthMiddleware;
 use App\Psrphp\Admin\Model\MenuProvider;
 use App\Psrphp\Admin\Model\WidgetProvider;
 use App\Psrphp\Admin\Widget\System;
-use Psr\EventDispatcher\ListenerProviderInterface;
 use PsrPHP\Database\Db;
 use PsrPHP\Framework\Config;
 use PsrPHP\Framework\Framework;
@@ -24,6 +21,7 @@ use PsrPHP\Request\Request;
 use PsrPHP\Router\Router;
 use PsrPHP\Session\Session;
 use PsrPHP\Template\Template;
+use Psr\EventDispatcher\ListenerProviderInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -149,8 +147,6 @@ class ListenerProvider implements ListenerProviderInterface
                 ) {
                     $provider->add('组织结构', DepartmentIndex::class);
                     $provider->add('账户管理', AccountIndex::class);
-                    $provider->add('插件管理', PluginIndex::class);
-                    $provider->add('主题管理', ThemeIndex::class);
                     $provider->add('清理缓存', Clear::class);
                 }, [
                     MenuProvider::class => $event,
