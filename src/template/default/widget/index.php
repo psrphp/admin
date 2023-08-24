@@ -13,7 +13,7 @@
         <fieldset>
             <legend>
                 <div style="display: flex;gap: 5px;align-items: center;justify-content: center;">
-                    <span>{$widget->getTitle()}</span>
+                    <span>{$widget->title()}</span>
                     {if $request->get('diy')}
                     {if $key}
                     <form action="{echo $router->build('/psrphp/admin/widget/left')}" method="POST">
@@ -34,7 +34,7 @@
                     {/if}
                 </div>
             </legend>
-            {echo $widget->getContent()}
+            {echo $widget->content()}
         </fieldset>
     </div>
     {/foreach}

@@ -17,7 +17,7 @@
                 <fieldset>
                     <legend>
                         <div style="display: flex;gap: 5px;align-items: center;justify-content: center;">
-                            <span>{$widget->getTitle()}</span>
+                            <span>{$widget->title()}</span>
                             <form action="{echo $router->build('/psrphp/admin/widget/add')}" method="post" target="diy">
                                 <input type="hidden" name="name" value="{$name}">
                                 <button type="submit">添加</button>
@@ -25,7 +25,7 @@
                         </div>
                     </legend>
                     <div>
-                        {echo $widget->getContent()}
+                        {echo $widget->content()}
                     </div>
                 </fieldset>
             </div>

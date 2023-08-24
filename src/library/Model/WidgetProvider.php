@@ -16,7 +16,7 @@ class WidgetProvider
         $event->dispatch($this);
     }
 
-    public function add(WidgetInterface $widget)
+    public function add(Widget $widget)
     {
         $this->widgets[$widget::class] = $widget;
     }

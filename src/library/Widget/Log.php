@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Psrphp\Admin\Widget;
 
 use App\Psrphp\Admin\Http\Auth\Login;
-use App\Psrphp\Admin\Model\WidgetInterface;
+use App\Psrphp\Admin\Model\Widget;
 use PsrPHP\Database\Db;
 use PsrPHP\Template\Template;
 
-class Log implements WidgetInterface
+class Log extends Widget
 {
     private $db;
     private $template;
@@ -26,6 +26,7 @@ class Log implements WidgetInterface
     {
         return '登录日志';
     }
+
     public function getContent(): string
     {
         $tpl = <<<'str'
