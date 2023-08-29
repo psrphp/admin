@@ -37,7 +37,7 @@ class Login extends Common
         $session->delete('admin_captcha');
 
         if ($auth->login($request->post('name'), $request->post('password'))) {
-            return Response::success('登录成功', null, $router->build('/psrphp/admin/index'));
+            return Response::redirect($router->build('/psrphp/admin/index'));
         } else {
             return Response::error('账户或密码不正确');
         }
