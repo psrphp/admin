@@ -9,11 +9,11 @@ use App\Psrphp\Admin\Lib\Response;
 use PsrPHP\Database\Db;
 use PsrPHP\Request\Request;
 use PsrPHP\Form\Builder;
-use PsrPHP\Form\Component\Col;
-use PsrPHP\Form\Component\Row;
-use PsrPHP\Form\Field\Hidden;
-use PsrPHP\Form\Field\Radio;
-use PsrPHP\Form\Field\Input;
+use PsrPHP\Form\Col;
+use PsrPHP\Form\Row;
+use PsrPHP\Form\Radio;
+use PsrPHP\Form\Input;
+use PsrPHP\Form\Radios;
 
 /**
  * 设置账户状态
@@ -34,15 +34,12 @@ class State extends Common
         $form->addItem(
             (new Row())->addCol(
                 (new Col('col-md-8'))->addItem(
-                    (new Hidden('id', $account['id'])),
-                    (new Input('账户', 'name', $account['name']))->set('disabled', true),
-                    (new Radio('状态', 'state', $account['state'], [[
-                        'label' => '允许登陆',
-                        'value' => 1,
-                    ], [
-                        'label' => '禁止登陆',
-                        'value' => 2,
-                    ]]))
+                    (new Input('id', 'id', $account['id']))->setType('hidden'),
+                    (new Input('账户', 'name', $account['name']))->setDisabled(true),
+                    (new Radios('状态'))->addRadio(
+                        new Radio('允许登录', 'state', 1, $account['state'] == 1),
+                        new Radio('禁止登陆', 'state', 2, $account['state'] == 2),
+                    )
                 )
             )
         );

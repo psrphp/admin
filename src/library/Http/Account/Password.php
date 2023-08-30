@@ -10,10 +10,9 @@ use App\Psrphp\Admin\Model\Account;
 use PsrPHP\Database\Db;
 use PsrPHP\Request\Request;
 use PsrPHP\Form\Builder;
-use PsrPHP\Form\Component\Col;
-use PsrPHP\Form\Component\Row;
-use PsrPHP\Form\Field\Hidden;
-use PsrPHP\Form\Field\Input;
+use PsrPHP\Form\Col;
+use PsrPHP\Form\Row;
+use PsrPHP\Form\Input;
 
 /**
  * 给账户重置密码
@@ -34,9 +33,9 @@ class Password extends Common
         $form->addItem(
             (new Row())->addCol(
                 (new Col('col-md-8'))->addItem(
-                    (new Hidden('id', $account['id'])),
-                    (new Input('账户', 'name', $account['name']))->set('disabled', true),
-                    (new Input('密码', 'password'))->set('type', 'password')->set('required', true)
+                    (new Input('id', 'id', $account['id']))->setType('hidden'),
+                    (new Input('账户', 'name', $account['name']))->setDisabled(true),
+                    (new Input('密码', 'password'))->setRequired(true)
                 )
             )
         );

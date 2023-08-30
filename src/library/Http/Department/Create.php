@@ -8,10 +8,10 @@ use App\Psrphp\Admin\Http\Common;
 use App\Psrphp\Admin\Lib\Response;
 use PsrPHP\Database\Db;
 use PsrPHP\Form\Builder;
-use PsrPHP\Form\Component\Col;
-use PsrPHP\Form\Component\Row;
-use PsrPHP\Form\Field\Input;
-use PsrPHP\Form\Field\Select;
+use PsrPHP\Form\Col;
+use PsrPHP\Form\Row;
+use PsrPHP\Form\Input;
+use PsrPHP\Form\SelectLevel;
 use PsrPHP\Request\Request;
 
 /**
@@ -26,7 +26,7 @@ class Create extends Common
         $form->addItem(
             (new Row())->addCol(
                 (new Col('col-md-9'))->addItem(
-                    new Select('上级部门', 'pid', null, (function () use ($db): array {
+                    new SelectLevel('上级部门', 'pid', null, (function () use ($db): array {
                         $res = [];
                         foreach ($db->select('psrphp_admin_department', '*') as $vo) {
                             $res[] = [

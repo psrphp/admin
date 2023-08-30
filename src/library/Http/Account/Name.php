@@ -9,10 +9,9 @@ use App\Psrphp\Admin\Lib\Response;
 use PsrPHP\Database\Db;
 use PsrPHP\Request\Request;
 use PsrPHP\Form\Builder;
-use PsrPHP\Form\Component\Col;
-use PsrPHP\Form\Component\Row;
-use PsrPHP\Form\Field\Hidden;
-use PsrPHP\Form\Field\Input;
+use PsrPHP\Form\Col;
+use PsrPHP\Form\Row;
+use PsrPHP\Form\Input;
 
 /**
  * 修改账户名
@@ -33,7 +32,7 @@ class Name extends Common
         $form->addItem(
             (new Row())->addCol(
                 (new Col('col-md-8'))->addItem(
-                    (new Hidden('id', $account['id'])),
+                    (new Input('id', 'id', $account['id']))->setType('hidden'),
                     (new Input('账户', 'name', $account['name']))
                 )
             )

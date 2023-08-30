@@ -9,9 +9,9 @@ use App\Psrphp\Admin\Lib\Response;
 use App\Psrphp\Admin\Model\Account;
 use PsrPHP\Database\Db;
 use PsrPHP\Form\Builder;
-use PsrPHP\Form\Component\Col;
-use PsrPHP\Form\Component\Row;
-use PsrPHP\Form\Field\Input;
+use PsrPHP\Form\Col;
+use PsrPHP\Form\Row;
+use PsrPHP\Form\Input;
 use PsrPHP\Request\Request;
 
 /**
@@ -25,8 +25,8 @@ class Create extends Common
         $form->addItem(
             (new Row())->addCol(
                 (new Col('col-md-9'))->addItem(
-                    (new Input('账户', 'name')),
-                    (new Input('密码', 'password'))->set('type', 'password')
+                    (new Input('账户', 'name'))->setRequired(true),
+                    (new Input('密码', 'password'))->setRequired(true)
                 ),
                 (new Col('col-md-3'))->addItem()
             )

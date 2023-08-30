@@ -8,11 +8,10 @@ use App\Psrphp\Admin\Http\Common;
 use App\Psrphp\Admin\Lib\Response;
 use PsrPHP\Database\Db;
 use PsrPHP\Form\Builder;
-use PsrPHP\Form\Component\Col;
-use PsrPHP\Form\Component\Html;
-use PsrPHP\Form\Component\Row;
-use PsrPHP\Form\Field\Hidden;
-use PsrPHP\Form\Field\Input;
+use PsrPHP\Form\Col;
+use PsrPHP\Form\Html;
+use PsrPHP\Form\Row;
+use PsrPHP\Form\Input;
 use PsrPHP\Framework\App;
 use PsrPHP\Request\Request;
 use PsrPHP\Template\Template;
@@ -36,8 +35,8 @@ class Auth extends Common
         $form->addItem(
             (new Row())->addCol(
                 (new Col('col-md-8'))->addItem(
-                    (new Hidden('id', $role['id'])),
-                    (new Input('角色名称', 'name', $role['name']))->set('disabled', true),
+                    (new Input('id', 'id', $role['id']))->setType('hidden'),
+                    (new Input('角色名称', 'name', $role['name']))->setDisabled(true),
                     (new Html((function () use ($db, $app, $template, $role): string {
                         $nodes = [];
                         foreach ($app->all() as $app) {
