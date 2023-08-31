@@ -12,20 +12,20 @@
     <div style="width: 400px;overflow-y:auto;height:100%;">
         <h1>挂件列表</h1>
         <div style="display: flex;flex-direction: column;gap: 20px;margin: 0px auto;">
-            {foreach $widgetProvider->all() as $name => $widget}
+            {foreach $widgetProvider->all() as $vo}
             <div>
                 <fieldset>
                     <legend>
                         <div style="display: flex;gap: 5px;align-items: center;justify-content: center;">
-                            <span>{$widget->title()}</span>
+                            <span>{echo $widgetWarpper->getTitle($vo)}</span>
                             <form action="{echo $router->build('/psrphp/admin/widget/add')}" method="post" target="diy">
-                                <input type="hidden" name="name" value="{$name}">
+                                <input type="hidden" name="name" value="{:get_class($vo)}">
                                 <button type="submit">添加</button>
                             </form>
                         </div>
                     </legend>
                     <div>
-                        {echo $widget->content()}
+                        {echo $widgetWarpper->getContent($vo)}
                     </div>
                 </fieldset>
             </div>

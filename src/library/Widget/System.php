@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Psrphp\Admin\Widget;
 
-use App\Psrphp\Admin\Model\Widget;
 use Composer\InstalledVersions;
+use PsrPHP\Framework\WidgetInterface;
 use PsrPHP\Template\Template;
 
-class System extends Widget
+class System implements WidgetInterface
 {
     private $template;
 

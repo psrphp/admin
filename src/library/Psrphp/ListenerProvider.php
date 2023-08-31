@@ -10,8 +10,6 @@ use App\Psrphp\Admin\Http\Common;
 use App\Psrphp\Admin\Http\Department\Index as DepartmentIndex;
 use App\Psrphp\Admin\Middleware\AuthMiddleware;
 use App\Psrphp\Admin\Model\MenuProvider;
-use App\Psrphp\Admin\Model\WidgetProvider;
-use App\Psrphp\Admin\Widget\System;
 use PsrPHP\Database\Db;
 use PsrPHP\Framework\Config;
 use PsrPHP\Framework\Framework;
@@ -123,19 +121,6 @@ class ListenerProvider implements ListenerProviderInterface
                     $handler->pushMiddleware($authMiddleware);
                 }, [
                     Common::class => $event,
-                ]);
-            };
-        }
-
-        if (is_a($event, WidgetProvider::class)) {
-            yield function () use ($event) {
-                Framework::execute(function (
-                    WidgetProvider $widgetProvider,
-                    System $system,
-                ) {
-                    $widgetProvider->add($system);
-                }, [
-                    WidgetProvider::class => $event,
                 ]);
             };
         }

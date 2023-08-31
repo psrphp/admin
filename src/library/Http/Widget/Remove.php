@@ -11,7 +11,7 @@ use App\Psrphp\Admin\Model\Auth;
 use PsrPHP\Request\Request;
 use PsrPHP\Router\Router;
 
-class Delete extends Common
+class Remove extends Common
 {
     public function post(
         Auth $auth,
