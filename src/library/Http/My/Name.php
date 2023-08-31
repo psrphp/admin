@@ -13,6 +13,7 @@ use PsrPHP\Form\Builder;
 use PsrPHP\Form\Col;
 use PsrPHP\Form\Row;
 use PsrPHP\Form\Input;
+use PsrPHP\Form\Hidden;
 
 /**
  * 修改自己的账户名
@@ -30,7 +31,7 @@ class Name extends Common
         $form->addItem(
             (new Row())->addCol(
                 (new Col('col-md-8'))->addItem(
-                    (new Input('id', 'id', $account['id']))->setType('hidden'),
+                    (new Hidden('id', $account['id'])),
                     (new Input('账户', 'name', $account['name']))
                 )
             )

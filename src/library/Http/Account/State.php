@@ -13,6 +13,7 @@ use PsrPHP\Form\Col;
 use PsrPHP\Form\Row;
 use PsrPHP\Form\Radio;
 use PsrPHP\Form\Input;
+use PsrPHP\Form\Hidden;
 use PsrPHP\Form\Radios;
 
 /**
@@ -34,7 +35,7 @@ class State extends Common
         $form->addItem(
             (new Row())->addCol(
                 (new Col('col-md-8'))->addItem(
-                    (new Input('id', 'id', $account['id']))->setType('hidden'),
+                    (new Hidden('id', $account['id'])),
                     (new Input('账户', 'name', $account['name']))->setDisabled(true),
                     (new Radios('状态'))->addRadio(
                         new Radio('允许登录', 'state', 1, $account['state'] == 1),

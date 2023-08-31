@@ -13,6 +13,7 @@ use PsrPHP\Form\Builder;
 use PsrPHP\Form\Col;
 use PsrPHP\Form\Row;
 use PsrPHP\Form\Input;
+use PsrPHP\Form\Hidden;
 
 /**
  * 给账户重置密码
@@ -33,7 +34,7 @@ class Password extends Common
         $form->addItem(
             (new Row())->addCol(
                 (new Col('col-md-8'))->addItem(
-                    (new Input('id', 'id', $account['id']))->setType('hidden'),
+                    (new Hidden('id', $account['id'])),
                     (new Input('账户', 'name', $account['name']))->setDisabled(true),
                     (new Input('密码', 'password'))->setRequired(true)
                 )
