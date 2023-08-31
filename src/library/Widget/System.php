@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Psrphp\Admin\Widget;
 
+use App\Psrphp\Admin\Model\WidgetInterface;
 use Composer\InstalledVersions;
-use PsrPHP\Framework\WidgetInterface;
 use PsrPHP\Template\Template;
 
 class System implements WidgetInterface
