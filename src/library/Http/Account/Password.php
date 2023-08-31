@@ -35,8 +35,8 @@ class Password extends Common
             (new Row())->addCol(
                 (new Col('col-md-8'))->addItem(
                     (new Hidden('id', $account['id'])),
-                    (new Input('账户', 'name', $account['name']))->setDisabled(true),
-                    (new Input('密码', 'password'))->setRequired(true)
+                    (new Input('账户', 'name', $account['name']))->setDisabled(),
+                    (new Input('密码', 'password'))->setRequired()
                 )
             )
         );

@@ -25,8 +25,8 @@ class Create extends Common
         $form->addItem(
             (new Row())->addCol(
                 (new Col('col-md-9'))->addItem(
-                    (new Input('账户', 'name'))->setRequired(true),
-                    (new Input('密码', 'password'))->setRequired(true)
+                    (new Input('账户', 'name'))->setRequired(),
+                    (new Input('密码', 'password'))->setRequired()
                 ),
                 (new Col('col-md-3'))->addItem()
             )

@@ -37,7 +37,7 @@ class Auth extends Common
             (new Row())->addCol(
                 (new Col('col-md-8'))->addItem(
                     (new Hidden('id', $role['id'])),
-                    (new Input('角色名称', 'name', $role['name']))->setDisabled(true),
+                    (new Input('角色名称', 'name', $role['name']))->setDisabled(),
                     (new Html((function () use ($db, $app, $template, $role): string {
                         $nodes = [];
                         foreach ($app->all() as $app) {

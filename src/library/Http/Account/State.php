@@ -36,7 +36,7 @@ class State extends Common
             (new Row())->addCol(
                 (new Col('col-md-8'))->addItem(
                     (new Hidden('id', $account['id'])),
-                    (new Input('账户', 'name', $account['name']))->setDisabled(true),
+                    (new Input('账户', 'name', $account['name']))->setDisabled(),
                     (new Radios('状态'))->addRadio(
                         new Radio('允许登录', 'state', 1, $account['state'] == 1),
                         new Radio('禁止登陆', 'state', 2, $account['state'] == 2),
