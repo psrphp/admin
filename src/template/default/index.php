@@ -57,7 +57,7 @@
         </div>
     </div>
     <hr>
-    <div style="display: flex;flex-direction: column;gap:10px;padding: 10px;">
+    <div style="display: flex;flex-direction: column;gap:5px;padding: 10px;">
         <div>
             <a href="{echo $router->build('/psrphp/admin/widget/index')}" target="main">主页</a>
         </div>
