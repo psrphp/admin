@@ -3,13 +3,15 @@
     html,
     body {
         height: 100%;
-        margin-top: 0;
-        margin-bottom: 0;
+        margin: 0;
         padding: 0;
     }
 </style>
 <div style="display: flex;flex-wrap:nowrap;height: 100%;">
-    <div style="width: 400px;overflow-y:auto;height:100%;">
+    <div style="flex-grow: 1;">
+        <iframe src="{echo $router->build('/psrphp/admin/widget/index?diy=1')}" name="diy" id="diy" frameborder="0" style="height:100%;width:100%;display: block;"></iframe>
+    </div>
+    <div style="width: 400px;overflow-y:auto;height:100%;padding:0 10px;">
         <h1>挂件列表</h1>
         <div style="display: flex;flex-direction: column;gap: 20px;margin: 0px auto;">
             {foreach $widgetProvider->all() as $vo}
@@ -31,9 +33,6 @@
             </div>
             {/foreach}
         </div>
-    </div>
-    <div style="flex-grow: 1;">
-        <iframe src="{echo $router->build('/psrphp/admin/widget/index?diy=1')}" name="diy" id="diy" frameborder="0" style="height:100%;width:100%;display: block;"></iframe>
     </div>
 </div>
 {include common/footer@psrphp/admin}

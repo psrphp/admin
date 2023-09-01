@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Psrphp\Admin\Model;
 
 use PsrPHP\Framework\App;
+use PsrPHP\Framework\WidgetInterface;
 use PsrPHP\Psr11\Container;
 
 class WidgetProvider

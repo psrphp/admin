@@ -41,7 +41,7 @@
     }
 </style>
 <div class="top">
-    <div style="color: #ddd;font-size: 1.5em;margin-left: 10px;" onclick="event.target.parentNode.nextElementSibling.nextElementSibling.style.left=event.target.parentNode.nextElementSibling.nextElementSibling.style.left=='200px'?'0':'200px'"><span style="margin-right:5px">≡</span>{$config->get('copyright.name@psrphp.admin', '后台管理系统')}</div>
+    <div style="color: #ddd;font-size: 1.5em;margin-left: 10px;" onclick="this.parentNode.nextElementSibling.nextElementSibling.style.left=this.parentNode.nextElementSibling.nextElementSibling.style.left=='200px'?'0':'200px'"><span style="margin-right:5px">≡</span>{$config->get('copyright.name@psrphp.admin', '后台管理系统')}</div>
 </div>
 <div class="left">
     <div style="padding: 10px;">

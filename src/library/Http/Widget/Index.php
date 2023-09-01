@@ -7,9 +7,9 @@ namespace App\Psrphp\Admin\Http\Widget;
 use App\Psrphp\Admin\Http\Common;
 use App\Psrphp\Admin\Model\Account;
 use App\Psrphp\Admin\Model\Auth;
-use App\Psrphp\Admin\Model\WidgetInterface;
 use App\Psrphp\Admin\Model\WidgetProvider;
 use App\Psrphp\Admin\Model\WidgetWarpper;
+use PsrPHP\Framework\WidgetInterface;
 use PsrPHP\Psr11\Container;
 use PsrPHP\Template\Template;
 

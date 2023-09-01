@@ -2,9 +2,9 @@
 <h1>信息看板</h1>
 <div>
     {if $request->has('get.diy')}
-    <a href="{echo $router->build('/psrphp/admin/widget/index')}" target="main">退出编辑</a>
+    <a href="{echo $router->build('/psrphp/admin/widget/index')}" target="main">退出DIY</a>
     {else}
-    <a href="{echo $router->build('/psrphp/admin/widget/diy')}">自定义本页</a>
+    <a href="{echo $router->build('/psrphp/admin/widget/diy')}" target="main">自定义本页</a>
     {/if}
 </div>
 <div style="display: flex;flex-direction: row;gap: 10px;flex-wrap: wrap;margin-top: 20px;">

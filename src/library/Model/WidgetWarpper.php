@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Psrphp\Admin\Model;
 
+use PsrPHP\Framework\WidgetInterface;
 use Throwable;
 
 class WidgetWarpper
