@@ -30,8 +30,8 @@ class Login extends Common
         Request $request,
         Session $session
     ): ResponseInterface {
-        $captcha = $_POST['captcha'];
-        if (!$captcha || $captcha != $session->get('admin_captcha')) {
+        $captcha = strtolower($_POST['captcha'] ?? '');
+        if (!strlen($captcha) || $captcha != $session->get('admin_captcha')) {
             return Response::error('验证码无效！');
         }
         $session->delete('admin_captcha');
