@@ -41,7 +41,7 @@ class Index extends Common
     {
         $paths = [];
         foreach (explode('\\', $node) as $vo) {
-            $paths[] = preg_replace('/([A-Z])/', "-$1", lcfirst($vo));
+            $paths[] = strtolower(preg_replace('/([A-Z])/', "-$1", lcfirst($vo)));
         }
         unset($paths[0]);
         unset($paths[3]);
@@ -52,7 +52,7 @@ class Index extends Common
     {
         $paths = [];
         foreach (explode('\\', $node) as $vo) {
-            $paths[] = preg_replace('/([A-Z])/', "-$1", lcfirst($vo));
+            $paths[] = strtolower(preg_replace('/([A-Z])/', "-$1", lcfirst($vo)));
         }
         return $paths[1] . '/' . $paths[2];
     }
