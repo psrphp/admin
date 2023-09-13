@@ -10,6 +10,11 @@ use PsrPHP\Template\Template;
 
 class Response
 {
+    public static function create(int $code = 200, string $reasonPhrase = ''): ResponseInterface
+    {
+        return (new Factory)->createResponse($code, $reasonPhrase);
+    }
+
     public static function success(string $message, $data = null, $redirect_url = null): ResponseInterface
     {
         $res = [
@@ -19,7 +24,7 @@ class Response
         if (!is_null($redirect_url)) {
             $res['redirect_url'] = $redirect_url;
         }
-        $response = (new Factory)->createResponse(200);
+        $response = self::create();
         if (self::isAcceptJson()) {
             if (!is_null($data)) {
                 $res['data'] = $data;
@@ -41,7 +46,7 @@ class Response
         if (!is_null($redirect_url)) {
             $res['redirect_url'] = $redirect_url;
         }
-        $response = (new Factory)->createResponse(200);
+        $response = self::create();
         if (self::isAcceptJson()) {
             if (!is_null($data)) {
                 $res['data'] = $data;
@@ -56,20 +61,20 @@ class Response
 
     public static function redirect(string $url, int $http_status_code = 302): ResponseInterface
     {
-        $response = (new Factory)->createResponse($http_status_code);
+        $response = self::create($http_status_code);
         return $response->withHeader('Location', $url);
     }
 
     public static function html(string $string): ResponseInterface
     {
-        $response = (new Factory)->createResponse(200);
+        $response = self::create();
         $response->getBody()->write($string);
         return $response;
     }
 
     public static function json($data): ResponseInterface
     {
-        $response = (new Factory)->createResponse(200);
+        $response = self::create();
         $response->getBody()->write(json_encode($data, JSON_UNESCAPED_UNICODE));
         return $response->withHeader('Content-Type', 'application/json');
     }
