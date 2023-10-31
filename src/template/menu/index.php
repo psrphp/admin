@@ -2,7 +2,7 @@
 <h1>功能地图</h1>
 
 <div style="margin-top: 20px;">
-    <div>已收藏</div>
+    <h4>已收藏</h4>
     <div style="display: flex;flex-direction: row;flex-wrap: wrap;gap: 20px;margin-top: 10px;">
         {foreach $sticks as $vo}
         <div>
@@ -14,11 +14,11 @@
 </div>
 
 <div style="margin-top: 20px;">
-    <div>功能地图</div>
+    <h4>功能地图</h4>
     <div style="display: flex;flex-direction: row;flex-wrap: wrap;gap: 20px;margin-top: 10px;">
         {foreach $menus as $appname => $items}
-        <fieldset>
-            <legend>{$appname}</legend>
+        <div>
+            <h6>{$appname}</h6>
             {foreach $items as $vo}
             <div>
                 <a href="{$vo.url}">{$vo.title}</a>
@@ -29,7 +29,7 @@
                 {/if}
             </div>
             {/foreach}
-        </fieldset>
+        </div>
         {/foreach}
     </div>
 </div>
